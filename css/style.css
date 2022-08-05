@@ -19,6 +19,8 @@ body {
 }
 
 form select {
+    width: 160px;
+    margin: 0px 0px 10px 5px;
     padding: 5px;
     border-color: transparent;
     border-radius: 5px;
