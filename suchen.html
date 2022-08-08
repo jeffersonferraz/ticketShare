@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>ticketShare | Anbieten</title>
+    <title>ticketShare | Suchen</title>
 </head>
 <body>
 
@@ -13,12 +13,10 @@
 
         <form action="">
 
-            <h1>ticketShare<sup>anbieten</sup></h1>
-
-            
+            <h1>ticketShare<sup>suchen</sup></h1>
 
             <nav>
-                <a href="suchen.html">suchen</a> 
+                <a href="suchen.html">suchen</a>  
                 <a href="anbieten.html">anbieten</a>
             </nav>
             
@@ -27,6 +25,7 @@
             <label for="tickets">Ticket</label>
             <select name="tickets" id="tickets">
 
+                <option value="all">Alle</option>
                 <option value="hessen_ticket">Hessenticket</option>
                 <option value="hessen_ticket">Hessenticket</option>
 
@@ -62,9 +61,7 @@
             <label for="appt">Uhrzeit</label>
             <input type="time" id="appt" name="appt" required>
 
-            <br>
-
-            <button type="submit">Fertig</button>
+            <button type="submit">Suchen</button>
 
         </form>
 
