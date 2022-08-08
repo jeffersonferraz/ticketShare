@@ -34,6 +34,12 @@ form input {
     border-radius: 5px;
 }
 
+#date{
+    width: 150px;
+    margin: 10px 0px 10px 5px;
+    padding: 5px;
+}
+
 form button {
     background-color: rgb(205, 205, 205);
     width: 210px;
