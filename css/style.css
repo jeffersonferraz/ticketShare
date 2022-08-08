@@ -2,6 +2,8 @@
 
 * {
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -16,6 +18,20 @@ body {
     padding: 10px;
     margin: 25px auto;
     border-radius: 10px;
+}
+
+h1 {
+    margin: 30px 0px;
+}
+
+sup {
+    font-size: 0.5em;
+    color: rgb(57, 121, 250);
+}
+
+a {
+    text-decoration: none;
+    color: rgb(57, 121, 250);
 }
 
 form select {
@@ -43,6 +59,11 @@ form input {
     width: 150px;
     margin: 10px 0px 10px 5px;
     padding: 5px;
+}
+
+#appt {
+    width: 140px;
+    margin: 10px 0px 10px 5px;
 }
 
 form button {
