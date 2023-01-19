@@ -27,21 +27,28 @@ class Statement {
 
         $stmt = $this->link->prepare($sql);
 
-        // $stmt->execute($parameters);
+        foreach ($parameters as $key => &$value) {
+            $stmt->bindParam(":" . $key, $value);
+        }
+
+        $stmt->execute();
 
         echo "<p>Fertig!</p>";
 
     }
 
-    // public function select($departure_city, $arrival_city) {
+
+    
+
+    public function select($departure_city, $arrival_city) {
         
-    //     $stmt = $this->link->query("SELECT * FROM trip WHERE departure_city = '$departure_city'
-    //                                 AND arrival_city = '$arrival_city'");
-    //     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->link->query("SELECT * FROM trip WHERE departure_city = '$departure_city'
+                                    AND arrival_city = '$arrival_city'");
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //     return $data;
+        return $data;
 
-    // }
+    }
 
     public function update() {
         
