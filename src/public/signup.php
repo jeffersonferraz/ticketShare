@@ -49,14 +49,14 @@
                 "mobile"
                 ];
 
-            $newUser = new Statement($link);
-
             $values = [
                 $_POST["first_name"], 
                 $_POST["last_name"], 
                 $_POST["email"], 
                 $_POST["mobile"]
                 ];
+
+            $newUser = new Statement($link);
 
             $newUser->insert($values, $table, $keys);
             
