@@ -8,17 +8,22 @@ class Statement {
     public $link;
 
 
-    public function __construct($databaseLink) {
-        $this->link = $databaseLink;
+    public function __construct($link, $values, $table, $keys) {
+
+        $this->link = $link;
+        $this->values = $values;
+        $this->table = $values;
+        $this->keys = $keys;
+
     }
 
-    public function insert($values, $table, $keys) {
+    public function insert() {
 
-        $rows = implode(', ', $keys);
-        $valueKeys = ":" . implode(', :', $keys);
-        $sql = "INSERT INTO $table ($rows) VALUES ($valueKeys)";
+        $rows = implode(', ', $this->keys);
+        $valueKeys = ":" . implode(', :', $this->keys);
+        $sql = "INSERT INTO $this->table ($rows) VALUES ($valueKeys)";
 
-        $parameters = array_combine($keys, $values);
+        $parameters = array_combine($this->keys, $this->values);
 
         $stmt = $this->link->prepare($sql);
 
