@@ -12,7 +12,7 @@ class Statement {
 
         $this->link = $link;
         $this->values = $values;
-        $this->table = $values;
+        $this->table = $table;
         $this->keys = $keys;
 
     }
@@ -21,13 +21,13 @@ class Statement {
 
         $rows = implode(', ', $this->keys);
         $valueKeys = ":" . implode(', :', $this->keys);
-        $sql = "INSERT INTO $this->table ($rows) VALUES ($valueKeys)";
+        $sql = "INSERT INTO " . $this->table . " ($rows) VALUES ($valueKeys)";
 
         $parameters = array_combine($this->keys, $this->values);
 
         $stmt = $this->link->prepare($sql);
 
-        $stmt->execute($parameters);
+        // $stmt->execute($parameters);
 
         echo "<p>Fertig!</p>";
 
