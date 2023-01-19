@@ -2,10 +2,11 @@
 
 class Statement {
 
+    public $link;
     public $values;
     public $table;
     public $keys;
-    public $link;
+    public $parameters;
 
 
     public function __construct($link, $values, $table, $keys) {
@@ -14,8 +15,11 @@ class Statement {
         $this->values = $values;
         $this->table = $table;
         $this->keys = $keys;
+        $this->parameters = array_combine($keys, $values);
 
     }
+
+
 
     public function insert() {
 
@@ -23,11 +27,9 @@ class Statement {
         $valueKeys = ":" . implode(', :', $this->keys);
         $sql = "INSERT INTO " . $this->table . " ($rows) VALUES ($valueKeys)";
 
-        $parameters = array_combine($this->keys, $this->values);
-
         $stmt = $this->link->prepare($sql);
 
-        foreach ($parameters as $key => &$value) {
+        foreach ($this->parameters as $key => &$value) {
             $stmt->bindParam(":" . $key, $value);
         }
 
@@ -36,9 +38,8 @@ class Statement {
         echo "<p>Fertig!</p>";
 
     }
-
-
     
+
 
     public function select($departure_city, $arrival_city) {
         
@@ -50,11 +51,15 @@ class Statement {
 
     }
 
+
+
     public function update() {
         
 
     }
 
+
+    
     public function delete() {
        
 

@@ -6,11 +6,7 @@ class Crud extends Statement{
 
     
 
-    public function create($values, $table, $keys) {
-
-        $rows = implode(', ', $keys);
-        $valueKeys = ":" . implode(', :', $keys);
-        $sql = "INSERT INTO $table ($rows) VALUES ($valueKeys)";
+    public function create() {
         
     }
 
