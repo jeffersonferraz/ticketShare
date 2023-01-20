@@ -7,7 +7,7 @@ class Statement {
     public $table;
     public $keys;
     public $parameters;
-
+    public $stmt;
 
     public function __construct($link, $values, $table, $keys) {
 
@@ -16,9 +16,9 @@ class Statement {
         $this->table = $table;
         $this->keys = $keys;
         $this->parameters = array_combine($keys, $values);
+        $this->insert();
 
     }
-
 
 
     public function insert() {
@@ -27,18 +27,21 @@ class Statement {
         $valueKeys = ":" . implode(', :', $this->keys);
         $sql = "INSERT INTO " . $this->table . " ($rows) VALUES ($valueKeys)";
 
-        $stmt = $this->link->prepare($sql);
+        $this->stmt = $this->link->prepare($sql);
 
         foreach ($this->parameters as $key => &$value) {
-            $stmt->bindParam(":" . $key, $value);
+            $this->stmt->bindParam(":" . $key, $value);
         }
 
-        $stmt->execute();
+    }
 
+
+    public function prepared() {
+
+        $this->stmt->execute($this->parameters);
         echo "<p>Fertig!</p>";
 
     }
-    
 
 
     public function select($departure_city, $arrival_city) {
@@ -48,20 +51,6 @@ class Statement {
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
-
-    }
-
-
-
-    public function update() {
-        
-
-    }
-
-
-    
-    public function delete() {
-       
 
     }
 
