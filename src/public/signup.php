@@ -60,8 +60,6 @@
 
             $newUser = new Statement($link, $values, $table, $keys);
 
-            $newUser->preparing();
-
             $newUser->executing($param);
 
         }

@@ -16,6 +16,7 @@ class Statement {
         $this->table = $table;
         $this->keys = $keys;
         $this->parameters = array_combine($keys, $values);
+        $this->preparing();
 
     }
 
