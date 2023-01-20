@@ -56,11 +56,13 @@
                 $_POST["mobile"]
                 ];
 
+            $param = array_combine($keys, $values);
+
             $newUser = new Statement($link, $values, $table, $keys);
 
             $newUser->preparing();
 
-            $newUser->executing();
+            $newUser->executing($param);
 
         }
     ?>

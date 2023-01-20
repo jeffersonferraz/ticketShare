@@ -35,9 +35,9 @@ class Statement {
     }
 
 
-    public function executing() {
+    public function executing($param) {
 
-        $this->stmt->execute($this->parameters);
+        $this->stmt->execute($param);
         echo "<p>Fertig!</p>";
 
     }
