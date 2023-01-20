@@ -16,12 +16,11 @@ class Statement {
         $this->table = $table;
         $this->keys = $keys;
         $this->parameters = array_combine($keys, $values);
-        $this->insert();
 
     }
 
 
-    public function insert() {
+    public function preparing() {
 
         $rows = implode(', ', $this->keys);
         $valueKeys = ":" . implode(', :', $this->keys);
@@ -36,7 +35,7 @@ class Statement {
     }
 
 
-    public function prepared() {
+    public function executing() {
 
         $this->stmt->execute($this->parameters);
         echo "<p>Fertig!</p>";

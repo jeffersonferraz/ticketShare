@@ -58,7 +58,9 @@
 
             $newUser = new Statement($link, $values, $table, $keys);
 
-            $newUser->prepared();
+            $newUser->preparing();
+
+            $newUser->executing();
 
         }
     ?>
