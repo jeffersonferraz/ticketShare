@@ -9,23 +9,19 @@ class Statement {
     public $parameters;
     public $stmt;
 
-    public function __construct($link, $values, $table, $keys) {
+    public function __construct($link, $values, $table, $keys, $sql) {
 
         $this->link = $link;
         $this->values = $values;
         $this->table = $table;
         $this->keys = $keys;
         $this->parameters = array_combine($keys, $values);
-        $this->preparing();
+        $this->preparing($sql);
 
     }
 
 
-    public function preparing() {
-
-        $rows = implode(', ', $this->keys);
-        $valueKeys = ":" . implode(', :', $this->keys);
-        $sql = "INSERT INTO " . $this->table . " ($rows) VALUES ($valueKeys)";
+    public function preparing($sql) {
 
         $this->stmt = $this->link->prepare($sql);
 

@@ -58,7 +58,10 @@
 
             $param = array_combine($keys, $values);
 
-            $newUser = new Statement($link, $values, $table, $keys);
+            $newCrud = new Crud;
+            $sql = $newCrud->create($table, $keys);
+
+            $newUser = new Statement($link, $values, $table, $keys, $sql);
 
             $newUser->executing($param);
 
