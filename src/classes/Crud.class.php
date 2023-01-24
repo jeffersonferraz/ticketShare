@@ -4,8 +4,6 @@ include_once ("../includes/link.inc.php");
 
 class Crud {
 
-    
-
     public function create($table, $keys) {
 
         $rows = implode(', ', $keys);

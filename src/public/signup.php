@@ -40,6 +40,13 @@
         
         if (isset($_POST['submit_button'])) {
 
+            $values = [
+                $_POST["first_name"], 
+                $_POST["last_name"], 
+                $_POST["email"], 
+                $_POST["mobile"]
+                ];
+
             $table = "user";
 
             $keys = [
@@ -47,13 +54,6 @@
                 "last_name", 
                 "email", 
                 "mobile"
-                ];
-
-            $values = [
-                $_POST["first_name"], 
-                $_POST["last_name"], 
-                $_POST["email"], 
-                $_POST["mobile"]
                 ];
 
             $param = array_combine($keys, $values);
