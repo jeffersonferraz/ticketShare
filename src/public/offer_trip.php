@@ -56,6 +56,16 @@
 
         if (isset($_POST['submit_button'])) {
 
+            $values = [
+                $_POST["ticket_id"],
+                $_POST["departure_city"],
+                $_POST["departure"],
+                $_POST["arrival_city"],
+                $_POST["arrival"],
+                $_POST["seats"],
+                $_POST["price"]
+            ];
+
             $table = "trip";
 
             $keys = [
@@ -68,19 +78,14 @@
                 "price"
             ];
 
-            $newTrip = new Statement($link);
+            $param = array_combine($keys, $values);
 
-            $values = [
-                $_POST["ticket_id"],
-                $_POST["departure_city"],
-                $_POST["departure"],
-                $_POST["arrival_city"],
-                $_POST["arrival"],
-                $_POST["seats"],
-                $_POST["price"]
-            ];
+            $newCrud = new Crud;
+            $sql = $newCrud->create($table, $keys);
 
-            $newTrip->insert($values, $table, $keys);
+            $newUser = new Statement($link, $values, $table, $keys, $sql);
+
+            $newUser->executing($param);
             
         }
     ?>
