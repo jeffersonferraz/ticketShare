@@ -1,5 +1,4 @@
 <?php
-include_once ("../classes/Database.class.php");
 
 define('SERVER_1',      'ticketShare_db');
 define('DATABASE_1',    'ticketShare_db');

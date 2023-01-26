@@ -8,4 +8,5 @@ function classLoader($class) {
     $fullPath = $path . $class . $extension;
 
     include_once $fullPath;
+
 }
