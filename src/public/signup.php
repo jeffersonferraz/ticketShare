@@ -56,14 +56,12 @@
                 "mobile"
                 ];
 
-            $param = array_combine($keys, $values);
-
             $newCrud = new Crud;
             $sql = $newCrud->create($table, $keys);
 
             $newUser = new Statement($link, $values, $table, $keys, $sql);
 
-            $newUser->executing($param);
+            $newUser->insert();
 
         }
     ?>

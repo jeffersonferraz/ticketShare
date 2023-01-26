@@ -19,11 +19,24 @@ include_once ("../includes/link.inc.php");
         <h2>Fahrten</h2><br>
 
         <?php
-            $departure_city = $_POST["departure_city"];
-            $arrival_city = $_POST["arrival_city"];
+            $values = [
+                $_POST["departure_city"],
+                $_POST["arrival_city"]
+                ];
 
-            $newSearch = new Statement($link);
-            $trips = $newSearch->select($departure_city, $arrival_city);
+            $table = "trip";
+
+            $keys = [
+                "departure_city",
+                "arrival_city"
+                ];
+
+            $newCrud = new Crud;
+            $sql = $newCrud->read($table, $keys);
+
+            $newSearch = new Statement($link, $values, $table, $keys, $sql);
+            $trips = $newSearch->select();
+            
         ?>
 
         <table>

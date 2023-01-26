@@ -6,6 +6,7 @@ class Statement {
     public $values;
     public $table;
     public $keys;
+    public $sql;
     public $parameters;
     public $stmt;
 
@@ -15,15 +16,16 @@ class Statement {
         $this->values = $values;
         $this->table = $table;
         $this->keys = $keys;
+        $this->sql = $sql;
         $this->parameters = array_combine($keys, $values);
-        $this->preparing($sql);
+        $this->preparing($this->sql);
 
     }
 
 
-    public function preparing($sql) {
+    public function preparing() {
 
-        $this->stmt = $this->link->prepare($sql);
+        $this->stmt = $this->link->prepare($this->sql);
 
         foreach ($this->parameters as $key => &$value) {
             $this->stmt->bindParam(":" . $key, $value);
@@ -32,19 +34,18 @@ class Statement {
     }
 
 
-    public function executing($param) {
+    public function insert() {
 
-        $this->stmt->execute($param);
+        $this->stmt->execute($this->parameters);
         echo "<p>Fertig!</p>";
 
     }
 
 
-    public function select($departure_city, $arrival_city) {
+    public function select() {
         
-        $stmt = $this->link->query("SELECT * FROM trip WHERE departure_city = '$departure_city'
-                                    AND arrival_city = '$arrival_city'");
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->stmt->execute($this->parameters);
+        $data = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $data;
 
