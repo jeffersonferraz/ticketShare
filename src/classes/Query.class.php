@@ -8,7 +8,9 @@ class Query {
 
         $rows = implode(', ', $keys);
         $valueKeys = ":" . implode(', :', $keys);
+
         $sql = "INSERT INTO $table ($rows) VALUES ($valueKeys)";
+        
         return($sql);
         
     }
@@ -21,7 +23,7 @@ class Query {
 
         $sql = "SELECT * FROM $table WHERE $keys[0] = $k1
                 AND $keys[1] = $k2";
-                
+
         return($sql);
 
     }
