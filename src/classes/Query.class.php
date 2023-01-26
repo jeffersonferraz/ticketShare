@@ -21,6 +21,7 @@ class Query {
 
         $sql = "SELECT * FROM $table WHERE $keys[0] = $k1
                 AND $keys[1] = $k2";
+                
         return($sql);
 
     }
