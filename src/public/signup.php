@@ -56,8 +56,8 @@
                 "mobile"
                 ];
 
-            $newCrud = new Crud;
-            $sql = $newCrud->create($table, $keys);
+            $newQuery = new Query;
+            $sql = $newQuery->create($table, $keys);
 
             $newUser = new Statement($link, $values, $table, $keys, $sql);
 

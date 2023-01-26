@@ -2,7 +2,7 @@
 include_once ("../includes/autoloader.inc.php");
 include_once ("../includes/link.inc.php");
 
-class Crud {
+class Query {
 
     public function create($table, $keys) {
 

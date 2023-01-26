@@ -31,8 +31,8 @@ include_once ("../includes/link.inc.php");
                 "arrival_city"
                 ];
 
-            $newCrud = new Crud;
-            $sql = $newCrud->read($table, $keys);
+            $newQuery = new Query;
+            $sql = $newQuery->read($table, $keys);
 
             $newSearch = new Statement($link, $values, $table, $keys, $sql);
             $trips = $newSearch->select();
