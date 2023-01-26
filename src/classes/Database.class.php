@@ -36,12 +36,4 @@ class Database {
 
     }
 
-    public function statement() {
-        //return insert statement
-    }
-
-    public function search() {
-        //return search statement
-    }
-
 }
