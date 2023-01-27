@@ -7,9 +7,9 @@ class Query {
     public function create($table, $keys) {
 
         $rows = implode(', ', $keys);
-        $valueKeys = ":" . implode(', :', $keys);
+        $placeholder = ":" . implode(', :', $keys);
 
-        $sql = "INSERT INTO $table ($rows) VALUES ($valueKeys)";
+        $sql = "INSERT INTO $table ($rows) VALUES ($placeholder)";
         
         return($sql);
         
@@ -17,12 +17,16 @@ class Query {
 
     public function read($table, $keys) {
 
-        // andere Weise überlegen
-        $k1 = ":".$keys[0];
-        $k2 = ":".$keys[1];
+        
+        $placeholder = ":" . implode(" :", $keys);
+        $placeholder = explode(" ", $placeholder);
 
-        $sql = "SELECT * FROM $table WHERE $keys[0] = $k1
-                AND $keys[1] = $k2";
+        for ($index = 0; $index < count($keys); $index++) {
+            $text[$index] = $keys[$index] . " = " . $placeholder[$index];
+        }
+        $result = join(" AND ", $text);
+
+        $sql = "SELECT * FROM $table WHERE $result";
 
         return($sql);
 
