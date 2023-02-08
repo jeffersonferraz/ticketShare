@@ -16,7 +16,6 @@ class Query {
     }
 
     public function read($table, $keys) {
-
         
         $placeholder = ":" . implode(" :", $keys);
         $placeholder = explode(" ", $placeholder);
