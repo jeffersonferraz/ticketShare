@@ -1,2 +1,4 @@
-
 .DS_Store
+database
+docker-compose.yml
+Dockerfile
