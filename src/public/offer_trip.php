@@ -69,10 +69,10 @@
             $table = "trip";
 
             $keys = [
-                "ticket_id",
-                "departure_city",
+                "ticketId",
+                "departureCity",
                 "departure",
-                "arrival_city",
+                "arrivalCity",
                 "arrival",
                 "seats",
                 "price"

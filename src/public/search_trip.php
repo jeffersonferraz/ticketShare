@@ -27,8 +27,8 @@ include_once ("../includes/link.inc.php");
             $table = "trip";
 
             $keys = [
-                "departure_city",
-                "arrival_city"
+                "departureCity",
+                "arrivalCity"
                 ];
 
             $newQuery = new Query;
@@ -56,9 +56,9 @@ include_once ("../includes/link.inc.php");
                 <?php foreach($trips as $trip): ?>
 
                     <tr>
-                        <td><?= $trip["departure_city"]?></td>
+                        <td><?= $trip["departureCity"]?></td>
                         <td><?= $trip["departure"]?></td>
-                        <td><?= $trip["arrival_city"]?></td>
+                        <td><?= $trip["arrivalCity"]?></td>
                         <td><?= $trip["arrival"]?></td>
                         <td><?= $trip["seats"]?></td>
                         <td><?= $trip["price"]?></td>

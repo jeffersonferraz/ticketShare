@@ -50,8 +50,8 @@
             $table = "user";
 
             $keys = [
-                "first_name", 
-                "last_name", 
+                "firstName", 
+                "lastName", 
                 "email", 
                 "mobile"
                 ];
