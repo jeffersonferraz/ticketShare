@@ -7,10 +7,8 @@ class Database {
     private $database;
     private $user;
     private $password;
-
     private $connection;
 
-    //database constructor
     public function __construct($server, $database, $user, $password) {
         $this->server = $server;
         $this->database = $database;
