@@ -3,28 +3,28 @@ include_once ("../includes/config.inc.php");
 
 class User {
 
-    public $first_name;
-    public $last_name;
+    public $firstName;
+    public $lastName;
     public $email;
     public $mobile;
 
-    public function setFirstName($first_name) {
-        $this->first_name = $first_name;
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
 
     }
 
     public function getFirstName() {
-        return $this->first_name;
+        return $this->firstName;
 
     }
 
-    public function setLastName($last_name) {
-        $this->last_name = $last_name;
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
 
     }
 
     public function getLastName() {
-        return $this->last_name;
+        return $this->lastName;
 
     }
 
