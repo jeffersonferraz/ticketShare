@@ -25,8 +25,8 @@ class Query {
         }
         $result = join(" AND ", $text);
 
-        $sql = "SELECT departureCity, departure, arrivalCity, arrival, seats, price
-                FROM $table WHERE $result";
+        // departureCity, departure, arrivalCity, arrival, seats, price
+        $sql = "SELECT * FROM $table WHERE $result";
 
         return($sql);
 
