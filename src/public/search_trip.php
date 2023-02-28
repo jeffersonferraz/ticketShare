@@ -30,9 +30,16 @@ include_once ("../includes/link.inc.php");
                 "departureCity",
                 "arrivalCity"
                 ];
+            
+            $searchedValues =  "departureCity,
+                                departure,
+                                arrivalCity,
+                                arrival,
+                                seats,
+                                price";
 
             $newQuery = new Query;
-            $sql = $newQuery->read($table, $keys);
+            $sql = $newQuery->read($table, $keys, $searchedValues);
 
             $newSearch = new Statement($link, $values, $table, $keys, $sql);
             $trips = $newSearch->select();

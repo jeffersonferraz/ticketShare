@@ -15,18 +15,14 @@ class Query {
         
     }
 
-    public function read($table, $keys) {
-        
-        $placeholder = ":" . implode(" :", $keys);
-        $placeholder = explode(" ", $placeholder);
+    public function read($table, $keys, $searchedValues) {
 
         for ($index = 0; $index < count($keys); $index++) {
-            $text[$index] = $keys[$index] . " = " . $placeholder[$index];
+            $placeholder[$index] = $keys[$index] . " = :" . $keys[$index];
         }
-        $result = join(" AND ", $text);
+        $columns = implode(" AND ", $placeholder);
 
-        // departureCity, departure, arrivalCity, arrival, seats, price
-        $sql = "SELECT * FROM $table WHERE $result";
+        $sql = "SELECT $searchedValues FROM $table WHERE $columns";
 
         return($sql);
 

@@ -19,6 +19,12 @@
         </nav>
 
         <form action="signup.php" method="post">
+            <!--
+            <input name="username" type="text" placeholder=" Benutzername"><br>
+
+            <input name="password" type="password" placeholder=" Passwort"><br>
+
+            <input name="confirm_password" type="password" placeholder=" Passwort bestätigen"><br> -->
 
             <input name="first_name" type="text" placeholder=" Vorname"><br>
 
@@ -28,7 +34,9 @@
 
             <input name="mobile" type="text" placeholder=" Handynummer"><br>
 
-            <button name="submit_button" type="submit">Registrieren</button>
+            <button name="signup_button" type="submit">Registrieren</button><br>
+
+            <a href="login.php" class="button" id="register_btn">Anmelden</a>
 
         </form>
 
@@ -38,18 +46,22 @@
         include_once ("../includes/autoloader.inc.php");
         include_once ("../includes/link.inc.php");
         
-        if (isset($_POST['submit_button'])) {
+        if (isset($_POST['signup_button'])) {
 
             $values = [
-                $_POST["first_name"], 
-                $_POST["last_name"], 
-                $_POST["email"], 
-                $_POST["mobile"]
+               // trim($_POST["username"]),
+               // trim($_POST["password"]),
+                trim($_POST["first_name"]), 
+                trim($_POST["last_name"]), 
+                trim($_POST["email"]), 
+                trim($_POST["mobile"])
                 ];
 
             $table = "user";
 
             $keys = [
+               // "username",
+               // "password",
                 "firstName", 
                 "lastName", 
                 "email", 
