@@ -19,12 +19,12 @@
         </nav>
 
         <form action="signup.php" method="post">
-            <!--
+           
             <input name="username" type="text" placeholder=" Benutzername"><br>
 
             <input name="password" type="password" placeholder=" Passwort"><br>
 
-            <input name="confirm_password" type="password" placeholder=" Passwort bestätigen"><br> -->
+            <input name="confirm_password" type="password" placeholder=" Passwort bestätigen"><br>
 
             <input name="first_name" type="text" placeholder=" Vorname"><br>
 
@@ -48,32 +48,78 @@
         
         if (isset($_POST['signup_button'])) {
 
+            $errors = [];
+
+            $searchedValue = 'userId';
+
             $values = [
-               // trim($_POST["username"]),
-               // trim($_POST["password"]),
+                trim($_POST["username"]),
+                trim($_POST["password"]),
                 trim($_POST["first_name"]), 
                 trim($_POST["last_name"]), 
                 trim($_POST["email"]), 
                 trim($_POST["mobile"])
                 ];
 
+            $confirmPassword = trim($_POST["confirm_password"]);
+
             $table = "user";
 
             $keys = [
-               // "username",
-               // "password",
+                "username",
+                "password",
                 "firstName", 
                 "lastName", 
                 "email", 
                 "mobile"
                 ];
+            
+            if (empty($values[0]) || empty($values[1]) || empty($values[2]) || empty($values[3]) || 
+                empty($values[4]) || empty($values[5]) || empty($confirmPassword)) {
 
-            $newQuery = new Query;
-            $sql = $newQuery->create($table, $keys);
+                array_push($errors, 'Eingabe fehlt.');
 
-            $newUser = new Statement($link, $values, $table, $keys, $sql);
+            } else {
 
-            $newUser->insert();
+                $valuesCheck = [$values[0], $values[4]];
+                $keysCheck = [$keys[0], $keys[4]];
+
+                $sql = "SELECT $searchedValue FROM $table WHERE $keysCheck[0] = :$keysCheck[0] 
+                        OR $keysCheck[1] = :$keysCheck[1]";
+
+                $newUserCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
+                
+                $data = $newUserCheck->select();
+
+                if (!empty($data)) {
+                    array_push($errors, 'Benutzername oder Email vorhanden.');
+                }
+
+                if ($values[1] != $confirmPassword) {
+                    array_push($errors, 'Passwort stimmt nicht überein.');
+                }
+
+            }
+
+            foreach ($errors as $error) {
+                echo "<p>" . $error . "</p><br>";
+            }
+
+            if (empty($errors)) {
+
+                $newQuery = new Query;
+                $sql = $newQuery->create($table, $keys);
+
+                $values[1] = password_hash($values[1], PASSWORD_DEFAULT);
+
+                $newUser = new Statement($link, $values, $table, $keys, $sql);
+
+                $newUser->insert();
+                    
+
+                
+
+            }
 
         }
     ?>

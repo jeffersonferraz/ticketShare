@@ -19,6 +19,15 @@ include_once ("../includes/link.inc.php");
         <h2>Fahrten</h2><br>
 
         <?php
+
+            $searchedValues =  
+                "departureCity,
+                departure,
+                arrivalCity,
+                arrival,
+                seats,
+                price";
+
             $values = [
                 $_POST["departure_city"],
                 $_POST["arrival_city"]
@@ -30,13 +39,6 @@ include_once ("../includes/link.inc.php");
                 "departureCity",
                 "arrivalCity"
                 ];
-            
-            $searchedValues =  "departureCity,
-                                departure,
-                                arrivalCity,
-                                arrival,
-                                seats,
-                                price";
 
             $newQuery = new Query;
             $sql = $newQuery->read($table, $keys, $searchedValues);

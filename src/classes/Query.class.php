@@ -18,9 +18,9 @@ class Query {
     public function read($table, $keys, $searchedValues) {
 
         for ($index = 0; $index < count($keys); $index++) {
-            $placeholder[$index] = $keys[$index] . " = :" . $keys[$index];
+            $column[$index] = $keys[$index] . " = :" . $keys[$index];
         }
-        $columns = implode(" AND ", $placeholder);
+        $columns = implode(" AND ", $column);
 
         $sql = "SELECT $searchedValues FROM $table WHERE $columns";
 
