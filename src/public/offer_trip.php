@@ -1,3 +1,51 @@
+<?php
+include_once ("../includes/autoloader.inc.php");
+include_once ("../includes/link.inc.php");
+
+    if (isset($_POST['submit_button'])) {
+
+        $errors = [];
+
+        $values = [
+            trim($_POST["ticket_id"]),
+            trim($_POST["departure_city"]),
+            trim($_POST["departure"]),
+            trim($_POST["arrival_city"]),
+            trim($_POST["arrival"]),
+            trim($_POST["seats"]),
+            trim($_POST["price"])
+        ];
+
+        $table = "trip";
+
+        $keys = [
+            "ticketId",
+            "departureCity",
+            "departure",
+            "arrivalCity",
+            "arrival",
+            "seats",
+            "price"
+        ];
+
+        if (empty($values[0]) || empty($values[1]) || empty($values[2]) || empty($values[3]) || 
+            empty($values[4]) || empty($values[5]) || empty($values[6])) {
+
+            array_push($errors, 'Eingabe fehlt.');
+
+        } else {
+
+            $newQuery = new Query;
+            $sql = $newQuery->create($table, $keys);
+
+            $newUser = new Statement($link, $values, $table, $keys, $sql);
+
+            $newUser->insert();
+        }
+        
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -18,6 +66,23 @@
             <a href="signup.php" class="button" id="register_btn">Registrieren</a>
         </nav>
 
+        <?php
+            if (isset($_POST['submit_button'])) {
+
+                foreach ($errors as $error) {
+                    echo '<div class="alert">';
+                    echo $error;
+                    echo '</div>';
+                }
+            
+                if (empty($errors)) {
+                    echo '<div class="success">';
+                    echo "Fahrt wurde registriert!";
+                    echo '</div>';
+                }
+            }
+        ?>
+
         <form action="offer_trip.php" method="post">
 
             <label for="ticket_id">Ticket</label>
@@ -27,11 +92,11 @@
 
             <input type="text" name="departure_city" placeholder=" Von"><br>
             <label for="departure">Abfahrt</label>
-            <input name="departure" type="datetime-local" class="date_field" required>
+            <input name="departure" type="datetime-local" class="date_field">
 
             <input type="text" name="arrival_city" placeholder=" Nach"><br>
             <label for="date">Ankunft</label>
-            <input name="arrival" type="datetime-local" class="date_field" required><br>
+            <input name="arrival" type="datetime-local" class="date_field"><br>
 
             <label for="seats">Plätze</label>
             <select name="seats">
@@ -42,7 +107,7 @@
             </select><br>
 
             <label for="price">Preis</label>
-            <input name="price" type="number" min="0.00" step="0.01" max="2500.00" id="price" placeholder="0,00€" required><br>
+            <input name="price" type="number" min="0.00" step="0.01" max="2500.00" id="price" placeholder="0,00€"><br>
 
             <button name="submit_button" type="submit">Anbieten</button>
 
@@ -50,43 +115,7 @@
 
     </div>
 
-    <?php
-        include_once ("../includes/autoloader.inc.php");
-        include_once ("../includes/link.inc.php");
-
-        if (isset($_POST['submit_button'])) {
-
-            $values = [
-                $_POST["ticket_id"],
-                $_POST["departure_city"],
-                $_POST["departure"],
-                $_POST["arrival_city"],
-                $_POST["arrival"],
-                $_POST["seats"],
-                $_POST["price"]
-            ];
-
-            $table = "trip";
-
-            $keys = [
-                "ticketId",
-                "departureCity",
-                "departure",
-                "arrivalCity",
-                "arrival",
-                "seats",
-                "price"
-            ];
-
-            $newQuery = new Query;
-            $sql = $newQuery->create($table, $keys);
-
-            $newUser = new Statement($link, $values, $table, $keys, $sql);
-
-            $newUser->insert();
-            
-        }
-    ?>
+    
 
 </body>
 </html>

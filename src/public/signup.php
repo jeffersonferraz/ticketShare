@@ -1,76 +1,76 @@
 <?php
-        include_once ("../includes/autoloader.inc.php");
-        include_once ("../includes/link.inc.php");
+include_once ("../includes/autoloader.inc.php");
+include_once ("../includes/link.inc.php");
+
+    if (isset($_POST['signup_button'])) {
+
+        $errors = [];
+
+        $searchedValue = 'userId';
+
+        $values = [
+            trim($_POST["username"]),
+            trim($_POST["password"]),
+            trim($_POST["first_name"]), 
+            trim($_POST["last_name"]), 
+            trim($_POST["email"]), 
+            trim($_POST["mobile"])
+            ];
+
+        $confirmPassword = trim($_POST["confirm_password"]);
+
+        $table = "user";
+
+        $keys = [
+            "username",
+            "password",
+            "firstName", 
+            "lastName", 
+            "email", 
+            "mobile"
+            ];
         
-        if (isset($_POST['signup_button'])) {
+        if (empty($values[0]) || empty($values[1]) || empty($values[2]) || empty($values[3]) || 
+            empty($values[4]) || empty($values[5]) || empty($confirmPassword)) {
 
-            $errors = [];
+            array_push($errors, 'Eingabe fehlt.');
 
-            $searchedValue = 'userId';
+        } else {
 
-            $values = [
-                trim($_POST["username"]),
-                trim($_POST["password"]),
-                trim($_POST["first_name"]), 
-                trim($_POST["last_name"]), 
-                trim($_POST["email"]), 
-                trim($_POST["mobile"])
-                ];
+            $valuesCheck = [$values[0], $values[4]];
+            $keysCheck = [$keys[0], $keys[4]];
 
-            $confirmPassword = trim($_POST["confirm_password"]);
+            $sql = "SELECT $searchedValue FROM $table WHERE $keysCheck[0] = :$keysCheck[0] 
+                    OR $keysCheck[1] = :$keysCheck[1]";
 
-            $table = "user";
-
-            $keys = [
-                "username",
-                "password",
-                "firstName", 
-                "lastName", 
-                "email", 
-                "mobile"
-                ];
+            $newUserCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
             
-            if (empty($values[0]) || empty($values[1]) || empty($values[2]) || empty($values[3]) || 
-                empty($values[4]) || empty($values[5]) || empty($confirmPassword)) {
+            $data = $newUserCheck->select();
 
-                array_push($errors, 'Eingabe fehlt.');
-
-            } else {
-
-                $valuesCheck = [$values[0], $values[4]];
-                $keysCheck = [$keys[0], $keys[4]];
-
-                $sql = "SELECT $searchedValue FROM $table WHERE $keysCheck[0] = :$keysCheck[0] 
-                        OR $keysCheck[1] = :$keysCheck[1]";
-
-                $newUserCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
-                
-                $data = $newUserCheck->select();
-
-                if (!empty($data)) {
-                    array_push($errors, 'Benutzername oder Email vorhanden.');
-                }
-
-                if ($values[1] != $confirmPassword) {
-                    array_push($errors, 'Passwort stimmt nicht überein.');
-                }
-
+            if (!empty($data)) {
+                array_push($errors, 'Benutzername oder Email vorhanden.');
             }
 
-            if (empty($errors)) {
-
-                $newQuery = new Query;
-                $sql = $newQuery->create($table, $keys);
-
-                $values[1] = password_hash($values[1], PASSWORD_DEFAULT);
-
-                $newUser = new Statement($link, $values, $table, $keys, $sql);
-
-                $newUser->insert();
-
+            if ($values[1] != $confirmPassword) {
+                array_push($errors, 'Passwort stimmt nicht überein.');
             }
 
         }
+
+        if (empty($errors)) {
+
+            $newQuery = new Query;
+            $sql = $newQuery->create($table, $keys);
+
+            $values[1] = password_hash($values[1], PASSWORD_DEFAULT);
+
+            $newUser = new Statement($link, $values, $table, $keys, $sql);
+
+            $newUser->insert();
+
+        }
+
+    }
 ?>
 
 <!DOCTYPE html>
