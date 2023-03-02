@@ -37,7 +37,7 @@ class Statement {
     public function insert() {
 
         $this->stmt->execute($this->parameters);
-        echo "<p>Benutzer wurde registriert!</p>";
+        //echo "<p>Fertig!</p>";
         
     }
 
