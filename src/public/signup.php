@@ -115,9 +115,6 @@
                 $newUser = new Statement($link, $values, $table, $keys, $sql);
 
                 $newUser->insert();
-                    
-
-                
 
             }
 
