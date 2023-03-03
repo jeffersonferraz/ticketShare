@@ -1,3 +1,69 @@
+<?php
+
+session_start();
+
+include_once ("../includes/autoloader.inc.php");
+include_once ("../includes/link.inc.php");
+
+    if (isset($_POST['login_button'])) {
+
+        $errors = [];
+
+        $searchedValues = 'userId, username, password';
+
+        $values = [
+            trim($_POST["email"]),
+            trim($_POST["password"])
+            ];
+
+        $table = "user";
+
+        $keys = [
+            "email",
+            "password"
+            ];
+        
+        if (empty($values[0]) || empty($values[1])) {
+
+            array_push($errors, 'Eingabe fehlt.');
+
+        }
+
+        if (empty($errors)) {
+
+            $valuesCheck = [$values[0]];
+            $keysCheck = [$keys[0]];
+
+            $sql = "SELECT $searchedValues FROM $table WHERE $keys[0] = :$keys[0]";
+            
+            $userCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
+                
+            $data = $userCheck->selectOne();
+
+            
+
+            if (!$data) {
+
+                array_push($errors, 'Email nicht registriert.');
+
+            } elseif (password_verify($values[1],$data['password'])) {
+                    //Session
+                    $_SESSION['auth'] = true;
+                    $_SESSION['userId'] = $data['userId'];
+                    $_SESSION['username'] = $data['username'];
+                    header("Location: ./welcome.php");
+
+                } else {
+
+                    array_push($errors, 'Passwort inkorrekt.');
+
+                }
+            }
+
+        }
+    
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -18,13 +84,24 @@
             <a href="offer_trip.php" class="button">anbieten</a>
         </nav>
 
-        <form action="signup.php" method="post">
+        <?php
+            if (isset($_POST['login_button'])) {
 
-            <input name="username" type="text" placeholder=" Benutzername"><br>
+                foreach ($errors as $error) {
+                    echo '<div class="alert">';
+                    echo $error;
+                    echo '</div>';
+                }
+            }
+        ?>
+
+        <form action="login.php" method="post">
+
+            <input name="email" type="text" placeholder=" Email"><br>
 
             <input name="password" type="password" placeholder=" Passwort"><br>
 
-            <button name="submit_button" type="submit">Anmelden</button><br>
+            <button name="login_button" type="submit">Anmelden</button><br>
 
             <a href="signup.php" class="button" id="register_btn">Registrieren</a>
 

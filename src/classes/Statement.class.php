@@ -37,18 +37,25 @@ class Statement {
     public function insert() {
 
         $this->stmt->execute($this->parameters);
-        //echo "<p>Fertig!</p>";
         
     }
 
-
+    //Returns an array containing all of the result set rows
     public function select() {
         
         $this->stmt->execute($this->parameters);
         $data = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        
         return $data;
 
     }
+    //Fetches the next row from a result set
+    public function selectOne() {
+        $this->stmt->execute($this->parameters);
+        $data = $this->stmt->fetch();
+
+        return $data;
+    }
 
 }
+?>
