@@ -2,8 +2,8 @@
 
 session_start();
 
-if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
-    header("location: login.php");
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header("Location: login.php");
     exit;
 }
 
@@ -30,6 +30,8 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
         </nav>
 
         <p>Hi <? echo $_SESSION['username']; ?></p>
+
+        <a href="logout.php" class="button">Abmelden</a>
         
     </div>
 

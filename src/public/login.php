@@ -5,62 +5,67 @@ session_start();
 include_once ("../includes/autoloader.inc.php");
 include_once ("../includes/link.inc.php");
 
-    if (isset($_POST['login_button'])) {
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    // do nothing
+} else {
+    header("Location: welcome.php");
+    exit;
+}
 
-        $errors = [];
+if (isset($_POST['login_button'])) {
 
-        $searchedValues = 'userId, username, password';
+    $errors = [];
 
-        $values = [
-            trim($_POST["email"]),
-            trim($_POST["password"])
-            ];
+    $searchedValues = 'userId, username, password';
 
-        $table = "user";
+    $values = [
+        trim($_POST["email"]),
+        trim($_POST["password"])
+        ];
 
-        $keys = [
-            "email",
-            "password"
-            ];
+    $table = "user";
+
+    $keys = [
+        "email",
+        "password"
+        ];
+    
+    if (empty($values[0]) || empty($values[1])) {
+
+        array_push($errors, 'Eingabe fehlt.');
+
+    }
+
+    if (empty($errors)) {
+
+        $valuesCheck = [$values[0]];
+        $keysCheck = [$keys[0]];
+
+        $sql = "SELECT $searchedValues FROM $table WHERE $keys[0] = :$keys[0]";
         
-        if (empty($values[0]) || empty($values[1])) {
-
-            array_push($errors, 'Eingabe fehlt.');
-
-        }
-
-        if (empty($errors)) {
-
-            $valuesCheck = [$values[0]];
-            $keysCheck = [$keys[0]];
-
-            $sql = "SELECT $searchedValues FROM $table WHERE $keys[0] = :$keys[0]";
+        $userCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
             
-            $userCheck = new Statement($link, $valuesCheck, $table, $keysCheck, $sql);
-                
-            $data = $userCheck->selectOne();
+        $data = $userCheck->selectOne();
 
-            
+        if (!$data) {
 
-            if (!$data) {
+            array_push($errors, 'Email nicht registriert.');
 
-                array_push($errors, 'Email nicht registriert.');
+        } elseif (password_verify($values[1],$data['password'])) {
+                //Session
+                $_SESSION['authenticated'] = true;
+                $_SESSION['userId'] = $data['userId'];
+                $_SESSION['username'] = $data['username'];
+                header("Location: welcome.php");
 
-            } elseif (password_verify($values[1],$data['password'])) {
-                    //Session
-                    $_SESSION['auth'] = true;
-                    $_SESSION['userId'] = $data['userId'];
-                    $_SESSION['username'] = $data['username'];
-                    header("Location: ./welcome.php");
+            } else {
 
-                } else {
+                array_push($errors, 'Passwort inkorrekt.');
 
-                    array_push($errors, 'Passwort inkorrekt.');
-
-                }
             }
+    }
 
-        }
+}
     
 ?>
 
@@ -85,6 +90,7 @@ include_once ("../includes/link.inc.php");
         </nav>
 
         <?php
+            
             if (isset($_POST['login_button'])) {
 
                 foreach ($errors as $error) {
