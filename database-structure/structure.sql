@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `ticketShare`.`users` (
 CREATE TABLE IF NOT EXISTS `ticketShare`.`cities` (
     `cityId` INT NOT NULL AUTO_INCREMENT,
     `cityName` VARCHAR(100) NOT NULL,
-    `state` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`cityId`)
     ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
@@ -32,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `ticketShare`.`offers` (
     `creatorId` INT NOT NULL,
     `departure` INT NOT NULL,
     `arrival` INT NOT NULL,
-    `time` DATETIME NOT NULL,
+    `datetime` DATETIME NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`offerId`),
     CONSTRAINT `fk_creatorId_userId`

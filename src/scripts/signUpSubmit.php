@@ -19,7 +19,7 @@ if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) 
 }
 
 // DB communication - read data from user
-$db = new Database();
+$db = new SignUp();
 $params = [
     ':email' => $email
 ];

@@ -1,5 +1,5 @@
 <div class="container mt-1 p-1 rounded-3 text-end bg-dark">
-    <span class="text-light"><?= $_SESSION['user']->firstname ?></span>
+    <span class="text-light"><?= $_SESSION['user']['firstname'] ?></span>
     <a class="btn btn-danger btn-sm ms-2" href="?route=logout">Logout</a>
 </div>
 <nav class="container mt-3 p-2 border rounded-3 shadow-sm bg-light">

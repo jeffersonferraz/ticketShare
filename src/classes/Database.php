@@ -1,31 +1,42 @@
 <?php
 class Database {
     
-    public function query($sql, $params = []) {
+    protected function connect(){
+        
         try {
-            // connection with the database
-            $connection = new PDO(
-                'mysql:host=' . DB_HOST . ';' . 
-                'dbname=' . DB_NAME, DB_USER, DB_PASS
-            );
+            $username = DB_USER;    // MySQL username
+            $password = DB_PASS;    // MySQL password
+            $database = DB_NAME;    // Database name
+            $host = DB_HOST;        // MySQL container name
+
+            $dsn = "mysql:dbname=". $database .";host=". $host;
+
+            $connection = new PDO($dsn ,$username, $password);
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $statement = $connection->prepare($sql);
-            $statement->execute($params);
 
-            $results = $statement->fetchAll(PDO::FETCH_CLASS);
-
-            // throw back the results
-            return [
-                'status' => 'success',
-                'data' => $results
-            ];
+            return $connection;
 
         } catch (PDOException $error) {
+
             // throw back the error
             return [
                 'status' => 'error',
                 'data' => $error->getMessage()
             ];
         }
+    }
+
+    public function getCities($params = []) {
+
+        $sql = "SELECT * FROM cities";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute($params);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // throw back the results
+        return [
+            'status' => 'success',
+            'data' => $results
+        ];
     }
 }

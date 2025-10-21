@@ -17,7 +17,7 @@ if (empty($email) || empty($password)) {
 }
 
 // DB communication - get data from user
-$db = new Database();
+$db = new Login();
 $params = [
     ':email' => $email
 ];
@@ -30,7 +30,7 @@ if ($result['status'] == 'error') {
     exit();
 }
 
-// verify if the user already exists
+// verify if the user does not exist
 if (count($result['data']) == 0) {
 
     // session error
@@ -39,14 +39,16 @@ if (count($result['data']) == 0) {
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
     exit();
 }
-
+echo '<pre>';
+print_r($result['data'][0]['password']);
+echo '</pre>';
 // verify if the password match
-if (!password_verify($password, $result['data'][0]->password)) {
+if (!password_verify($password, $result['data'][0]['password'])) {
 
     // session error
     $_SESSION['error'] = 'Email or password invalid.';
 
-    echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
+    // echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
     exit();
 }
 

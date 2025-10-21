@@ -71,9 +71,12 @@ switch ($route) {
         break;
 }
 
-// constantly required scripts
+// constantly required resources
 require_once __DIR__ . "/includes/config.php";
 require_once __DIR__ . "/classes/Database.php";
+require_once __DIR__ . "/classes/Login.php";
+require_once __DIR__ . "/classes/SignUp.php";
+require_once __DIR__ . "/classes/Offer.php";
 
 // display page
 require_once __DIR__ . "/includes/header.php";
