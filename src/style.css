@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900');
+
+* {
+    font-family: 'Fira Sans', sans-serif;
+}
+
+body {
+    background: linear-gradient(90deg, rgb(73, 128, 223), rgb(72, 150, 227), rgb(73, 128, 223));
+}
+
+.logo {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 600;
+    background-color: rgb(22, 60, 135);
+    color: whitesmoke;
+    padding: 4px 16px;
+    text-align: center;
+    width: fit-content;
+    border-radius: 5px;
+    border-top: 8px solid rgb(116, 170, 224);
+    border-bottom: 8px solid rgb(116, 170, 224);
+}

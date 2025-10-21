@@ -1,31 +1,81 @@
 <?php
+// start session
+session_start();
 
-?>
+// load allowed routes
+$allowedRoutes = require_once __DIR__ . "/includes/routes.php";
 
+// define routes
+$route = $_GET['route'] ?? 'home';
 
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/main.css">
-    <title>ticketShare</title>
-</head>
-<body>
+// verify if user is logged in or wants sign up
+if (!isset($_SESSION['user']) && $route != 'login-submit' && $route != 'signup' && $route != 'signup-submit') {
+    $route = 'login';
+}
 
-    <div class="container">
-        
-        <a href="index.php"><h1>ticketShare</h1></a>
+// if user is logged in and try to login again
+if (isset($_SESSION['user']) && $route === 'login') {
+    $route = 'home';
+}
 
-        <nav>
-            <a href="public/search.php" class="button">suchen</a>
-            <a href="public/offer_trip.php" class="button">anbieten</a>
-        </nav>
+// if route does not exist
+if (!in_array($route, $allowedRoutes)) {
+    $route = '404';
+}
+
+// provide requested routes
+$script = null;
+switch ($route) {
+    case '404':
+        $script = '404.php';
+        break;
+
+    case 'signup':
+        $script = 'signUp.php';
+        break;
     
-        <a href="public/signup.php" class="button" id="register_btn">Registrieren</a>
+    case 'signup-submit':
+        $script = 'signUpSubmit.php';
+        break;
 
-    </div>
+    case 'login':
+        $script = 'login.php';
+        break;
 
-</body>
-</html>
+    case 'login-submit':
+        $script = 'loginSubmit.php';
+        break;
+
+    case 'logout':
+        $script = 'logout.php';
+        break;
+
+    case 'home':
+        $script = 'home.php';
+        break;
+
+    case 'offer':
+        $script = 'offer.php';
+        break;
+
+    case 'offer-submit':
+        $script = 'offerSubmit.php';
+        break;
+
+    case 'search':
+        $script = 'search.php';
+        break;
+
+    case 'search-submit':
+        $script = 'searchSubmit.php';
+        break;
+}
+
+// constantly required scripts
+require_once __DIR__ . "/includes/config.php";
+require_once __DIR__ . "/classes/Database.php";
+
+// display page
+require_once __DIR__ . "/includes/header.php";
+require_once __DIR__ . "/scripts/$script";
+require_once __DIR__ . "/includes/footer.php";

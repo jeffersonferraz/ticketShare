@@ -1,0 +1,23 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ticketShare_webserver
+    ports:
+      - 80:80
+    volumes:
+      - ./src:/var/www/html/
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:latest
+    container_name: ticketShare_database
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - 3307:3306
+    volumes:
+      - ./database:/var/lib/mysql
