@@ -39,16 +39,14 @@ if (count($result['data']) == 0) {
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
     exit();
 }
-echo '<pre>';
-print_r($result['data'][0]['password']);
-echo '</pre>';
+
 // verify if the password match
 if (!password_verify($password, $result['data'][0]['password'])) {
 
     // session error
     $_SESSION['error'] = 'Email or password invalid.';
 
-    // echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
+    echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
     exit();
 }
 

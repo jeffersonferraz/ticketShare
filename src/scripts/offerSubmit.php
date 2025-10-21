@@ -18,10 +18,8 @@ if (empty($creatorId) || empty($departure) || empty($arrival) || empty($datetime
     exit();
 }
 
-// DB communication - proof
-$db = new Offer();
-
 // DB communication - send data from user
+$db = new Offer();
 $params = [
     ':creatorId' => $creatorId,
     ':departure' => $departure,
