@@ -4,12 +4,24 @@ require_once __DIR__ . '/../includes/navbar.php';
 <div class="container mt-2 border rounded-3 shadow-sm bg-light">
     <div class="row">
         <div class="col">
-            <h4 class="text-center mt-4">Search for a ride</h4>
-            <p class="m-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime saepe suscipit odit laudantium incidunt quis nemo at hic, numquam, asperiores ullam quia quas iste illum fugiat dolorum accusamus omnis est!
-            Distinctio debitis hic non odit excepturi dolorem dolores commodi libero beatae tempore quaerat aut sequi exercitationem quas deleniti voluptas, ratione amet fugiat repellendus animi. Placeat cum sed delectus magnam quibusdam?
-            At ad in dolores aliquam natus ducimus quas sequi doloremque earum beatae blanditiis ut, consectetur unde reiciendis itaque non mollitia omnis officiis ullam voluptatem facilis numquam eius! Expedita, consectetur pariatur?
-            Molestias, minus! Quas explicabo necessitatibus quaerat! Ipsum pariatur cumque sunt eveniet optio ea explicabo laborum velit ex qui officia illo, beatae harum suscipit itaque obcaecati maxime voluptatibus odio iure quam.
-            Facere repellat repellendus numquam consequuntur incidunt corporis harum accusamus fugiat a rerum. Consequatur iste fugiat exercitationem similique corrupti quasi minus. Optio eveniet esse iste quos nisi ipsa modi hic suscipit!</p>
+            <h2 class="text-center text-dark text-opacity-75 mt-5 mb-4">Search for a ride</h2>
+
+            <div class="mb-5 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px; margin:auto;">
+
+                <form action="?route=search-submit" method="POST">
+                    <div class="mb-3">
+                        <input class="form-control" type="text" name="departure" placeholder="Departure" required>
+                    </div>
+                    <div class="mb-4">
+                        <input class="form-control" type="text" name="arrival" placeholder="Arrival" required>
+                    </div>
+                    <div>
+                        <input class="btn btn-success w-100" type="submit" name="search-submit" value="Search Offer">
+                    </div>
+                </form>
+                
+            </div>
+
         </div>
     </div>
 </div>

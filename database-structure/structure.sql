@@ -1,7 +1,3 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 CREATE SCHEMA IF NOT EXISTS `ticketShare` DEFAULT CHARACTER SET utf8 ;
 USE `ticketShare`;
 
@@ -28,6 +24,24 @@ CREATE TABLE IF NOT EXISTS `ticketShare`.`cities` (
     PRIMARY KEY (`cityId`)
     ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- Table `ticketShare`.`offers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ticketShare`.`offers` (
+    `offerId` INT NOT NULL AUTO_INCREMENT,
+    `creatorId` INT NOT NULL,
+    `departure` INT NOT NULL,
+    `arrival` INT NOT NULL,
+    `time` DATETIME NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`offerId`),
+    CONSTRAINT `fk_creatorId_userId`
+    FOREIGN KEY (`creatorId`)
+    REFERENCES `ticketShare`.`users` (`userId`),
+    CONSTRAINT `fk_departure_cityId`
+    FOREIGN KEY (`departure`)
+    REFERENCES `ticketShare`.`cities` (`cityId`),
+    CONSTRAINT `fk_arrival_cityId`
+    FOREIGN KEY (`arrival`)
+    REFERENCES `ticketShare`.`cities` (`cityId`)
+    ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
