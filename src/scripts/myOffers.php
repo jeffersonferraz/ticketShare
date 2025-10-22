@@ -17,20 +17,21 @@ $cities = $cityResults['data'];
 // print_r($cities);
 // echo '</pre>';
 ?>
-<div class="container p-4 mt-2 border rounded-3 shadow-sm bg-light text-center w-100">
+<div class="container p-4 mt-2 mb-5 border rounded-3 shadow-sm bg-light text-center w-100">
     <h2 class="text-center text-dark text-opacity-75 mt-4 mb-5">My Offers</h2>
     <div class="row">
         <? foreach ($offers as $offer): ?>
             <div class="col">
-                <div class="container text-center mb-5 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50">
+                <div class="container text-center mb-4 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px;">
 
                     <form class="row" action="?route=offer-submit" method="POST">
                         <div class="col">
-                            
+                            <p class="badge text-bg-secondary mb-4" style="font-size: 15px; font-weight: 400;"><?= 'Offer Nr: ' . $offer["offerId"] ?></p>
+                            <input class="form-control mb-3" name="offerId" value="<?= $offer["offerId"] ?>" hidden>
+
                             <select class="form-control mb-3" name="departure">
                                 <option value="<?= $offer["departure"] ?>" selected disabled>
                                     <?= $cities[$offer["departure"] - 1]['cityName'] ?>
-                                    <?= $offer["departure"] ?>
                                 </option>
 
                                 <? foreach ($cities as $city): ?>
@@ -43,7 +44,6 @@ $cities = $cityResults['data'];
                             <select class="form-control mb-3" name="arrival">
                                 <option value="<?= $offer["arrival"] ?>" selected disabled>
                                     <?= $cities[$offer['arrival'] - 1]["cityName"] ?>
-                                    <?= $offer["arrival"] ?>
                                 </option>
 
                                 <? foreach ($cities as $city): ?>
@@ -57,14 +57,15 @@ $cities = $cityResults['data'];
                                 <input class="edit form-control" id="datetime" type="datetime-local" name="datetime" value="<?= $offer['datetime'] ?>" disabled>
                             </div>
                         </div>
+                        
                         <div class="mt-4 text-end">
-                            <input class="btn btn-danger btn-sm w-25" type="submit" name="offer-delete-submit" value="Delete">
+                            <button class="btn btn-secondary btn-sm w-25" onclick="enableInputs()" type="button">Edit</button>
 
-                            <input class="btn btn-success btn-sm w-25" type="submit" name="offer-update-submit" value="Save">
+                            <input class="btn btn-success btn-sm w-25" type="submit" name="offer-update" value="Save">
+
+                            <input class="btn btn-danger btn-sm w-25" type="submit" name="offer-delete" value="Delete">
                         </div>
                     </form>
-
-                    <button class="btn btn-secondary btn-sm w-25" onclick="enableInputs()">Edit</button>
 
                 </div>
             </div>

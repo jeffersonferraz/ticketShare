@@ -36,7 +36,7 @@ $cities = $results['data'];
                     </div>
 
                     <div>
-                        <input class="btn btn-success w-100" type="submit" name="offer-submit" value="Create">
+                        <input class="btn btn-success w-100" type="submit" name="offer-create" value="Create">
                     </div>
 
                 </form>

@@ -22,7 +22,58 @@ class Offer extends Database {
             ':creatorId' => $userId
             ];
         
-        $sql = "SELECT * FROM offers WHERE creatorId = :creatorId";
+        $sql = "
+            SELECT * FROM offers 
+            WHERE creatorId = :creatorId
+            ";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute($params);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // throw back the results
+        return [
+            'status' => 'success',
+            'data' => $results
+        ];
+    }
+
+    
+
+    public function updateOffer($offerId, $departure, $arrival, $datetime) {
+        
+        $params = [
+            ':offerId' => $offerId,
+            ':departure' => $departure,
+            ':arrival' => $arrival,
+            ':datetime' => $datetime
+            ];
+        
+        $sql = "
+            UPDATE offers
+            SET departure = :departure, arrival = :arrival, datetime = :datetime
+            WHERE offerId = :offerId
+            ";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute($params);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // throw back the results
+        return [
+            'status' => 'success',
+            'data' => $results
+        ];
+    }
+
+    public function deleteOffer($offerId) {
+        
+        $params = [
+            ':offerId' => $offerId,
+            ];
+        
+        $sql = "
+            DELETE FROM offers
+            WHERE offerId = :offerId
+            ";
         $statement = $this->connect()->prepare($sql);
         $statement->execute($params);
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
