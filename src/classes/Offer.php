@@ -15,4 +15,23 @@ class Offer extends Database {
             'data' => $results
         ];
     }
+
+    public function getOffersByUserId($userId) {
+
+        $params = [
+            ':creatorId' => $userId
+            ];
+        
+        $sql = "SELECT * FROM offers WHERE creatorId = :creatorId";
+        $statement = $this->connect()->prepare($sql);
+        $statement->execute($params);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // throw back the results
+        return [
+            'status' => 'success',
+            'data' => $results
+        ];
+    }
+    
 }

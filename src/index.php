@@ -62,6 +62,10 @@ switch ($route) {
         $script = 'offerSubmit.php';
         break;
 
+    case 'my-offers':
+        $script = 'myOffers.php';
+        break;
+
     case 'search':
         $script = 'search.php';
         break;

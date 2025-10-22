@@ -11,6 +11,7 @@ return [
     'logout',
     'offer',
     'offer-submit',
+    'my-offers',
     'search',
     'search-submit'
 ];
