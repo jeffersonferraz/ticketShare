@@ -44,6 +44,25 @@ if (isset($_POST['offer-create'])) {
 }
 
 // verify which type of POST method
+if (isset($_POST['search-offer'])) {
+
+    // verify if there is data
+    if (empty($departure) || empty($arrival)) {
+        echo '<meta http-equiv="refresh" content="0;url=index.php?route=search">';
+        exit();
+    }
+
+    // search for offers
+    $result = $db->getOffers($departure, $arrival);
+
+    $_SESSION['results'] = $result['data'] ?? NULL;
+
+    // redirect user
+    echo '<meta http-equiv="refresh" content="0;url=index.php?route=search">';
+    exit();
+}
+
+// verify which type of POST method
 if (isset($_POST['offer-update'])) {
 
     // verify if there is data
