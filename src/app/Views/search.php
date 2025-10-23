@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../includes/navbar.php';
+require_once __DIR__ . '/includes/navbar.php';
 
 // get cities
-$data = new Database();
+$data = new Cities();
 $results = $data->getCities();
 $cities = $results['data'];
 ?>

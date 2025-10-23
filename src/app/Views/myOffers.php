@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/navbar.php';
+require_once __DIR__ . '/includes/navbar.php';
 
 // get offers
 $data = new Offer();
@@ -10,7 +10,7 @@ $offers = $offerResults['data'];
 // echo '</pre>';
 
 // get cities
-$data = new Database();
+$data = new Cities();
 $cityResults = $data->getCities();
 $cities = $cityResults['data'];
 ?>

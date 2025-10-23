@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_POST['login-submit'])) {
     exit();
 }
 
-// get the user submitted data
+// get user submitted data
 $email = $_POST['email'] ?? NULL;
 $password = $_POST['password'] ?? NULL;
 
@@ -16,13 +16,15 @@ if (empty($email) || empty($password)) {
     exit();
 }
 
-// DB communication - get data from user
+// DB communication
 $db = new Login();
+
 $params = [
     ':email' => $email
 ];
-$sql = "SELECT * FROM users WHERE email = :email";
-$result = $db->query($sql, $params);
+
+// get data from user
+$result = $db->getUser($params);
 
 // verify DB communication errors 
 if ($result['status'] == 'error') {
@@ -50,7 +52,7 @@ if (!password_verify($password, $result['data'][0]['password'])) {
     exit();
 }
 
-// define the of the user
+// define a session for user
 $_SESSION['user'] = $result['data'][0];
 
 // redirect user

@@ -25,18 +25,4 @@ class Database {
             ];
         }
     }
-
-    public function getCities($params = []) {
-
-        $sql = "SELECT * FROM cities";
-        $statement = $this->connect()->prepare($sql);
-        $statement->execute($params);
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        // throw back the results
-        return [
-            'status' => 'success',
-            'data' => $results
-        ];
-    }
 }

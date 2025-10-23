@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/navbar.php';
+require_once __DIR__ . '/includes/navbar.php';
 ?>
 <div class="container p-5 mt-2 border rounded-3 shadow-sm bg-light w-100">
     <div class="row">

@@ -32,11 +32,9 @@ if (isset($_POST['offer-create'])) {
         ':arrival' => $arrival,
         ':datetime' => $datetime
     ];
-    $sql = "
-    INSERT INTO offers (creatorId, departure, arrival, datetime) 
-    VALUES (:creatorId, :departure, :arrival, :datetime)
-    ";
-    $result = $db->query($sql, $params);
+
+    // create new offer
+    $result = $db->createOffer($params);
 
     // redirect user
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=offer">';
@@ -52,8 +50,13 @@ if (isset($_POST['offer-search'])) {
         exit();
     }
 
+    $params = [
+        ':departure' => $departure,
+        ':arrival' => $arrival
+    ];
+
     // search for offers
-    $result = $db->getOffers($departure, $arrival);
+    $result = $db->getOffers($params);
 
     // fallback value: NULL
     // if $_SESSION['results'] is empty or NULL
@@ -74,8 +77,15 @@ if (isset($_POST['offer-update'])) {
         exit();
     }
 
+    $params = [
+        ':offerId' => $offerId,
+        ':departure' => $departure,
+        ':arrival' => $arrival,
+        ':datetime' => $datetime
+    ];
+
     // update offer
-    $result = $db->updateOffer($offerId, $departure, $arrival, $datetime);
+    $result = $db->updateOffer($params);
 
     // redirect user
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=my-offers">';
@@ -90,9 +100,13 @@ if (isset($_POST['offer-delete'])) {
         echo '<meta http-equiv="refresh" content="0;url=index.php?route=my-offers">';
         exit();
     }
+
+    $params = [
+        ':offerId' => $offerId,
+    ];
     
     // delete offer
-    $result = $db->deleteOffer($offerId);
+    $result = $db->deleteOffer($params);
 
     // redirect user
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=my-offers">';

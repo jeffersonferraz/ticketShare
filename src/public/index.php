@@ -3,7 +3,7 @@
 session_start();
 
 // load allowed routes
-$allowedRoutes = require_once __DIR__ . "/includes/routes.php";
+$allowedRoutes = require_once __DIR__ . "/../app/Core/routes.php";
 
 // define routes
 $route = $_GET['route'] ?? 'home';
@@ -24,65 +24,66 @@ if (!in_array($route, $allowedRoutes)) {
 }
 
 // provide requested routes
-$script = null;
+$path = null;
 switch ($route) {
     case '404':
-        $script = '404.php';
+        $path = 'Views/404.php';
         break;
 
     case 'signup':
-        $script = 'signUp.php';
+        $path = 'Views/signUp.php';
         break;
     
     case 'signup-submit':
-        $script = 'signUpSubmit.php';
+        $path = 'Controllers/SignUpController.php';
         break;
 
     case 'login':
-        $script = 'login.php';
+        $path = 'Views/login.php';
         break;
 
     case 'login-submit':
-        $script = 'loginSubmit.php';
+        $path = 'Controllers/LoginController.php';
         break;
 
     case 'logout':
-        $script = 'logout.php';
+        $path = 'Views/logout.php';
         break;
 
     case 'home':
-        $script = 'home.php';
+        $path = 'Views/home.php';
         break;
 
     case 'offer':
-        $script = 'offer.php';
+        $path = 'Views/offer.php';
         break;
 
     case 'offer-submit':
-        $script = 'offerSubmit.php';
+        $path = 'Controllers/OfferController.php';
         break;
 
     case 'my-offers':
-        $script = 'myOffers.php';
+        $path = 'Views/myOffers.php';
         break;
 
     case 'search':
-        $script = 'search.php';
+        $path = 'Views/search.php';
         break;
 
     case 'search-submit':
-        $script = 'searchSubmit.php';
+        $path = 'Controllers/searchSubmit.php';
         break;
 }
 
 // constantly required resources
-require_once __DIR__ . "/includes/config.php";
-require_once __DIR__ . "/classes/Database.php";
-require_once __DIR__ . "/classes/Login.php";
-require_once __DIR__ . "/classes/SignUp.php";
-require_once __DIR__ . "/classes/Offer.php";
+require_once __DIR__ . "/../config/config.php";
+require_once __DIR__ . "/../app/Core/Database.php";
+require_once __DIR__ . "/../app/Models/Login.php";
+require_once __DIR__ . "/../app/Models/SignUp.php";
+require_once __DIR__ . "/../app/Models/Offer.php";
+require_once __DIR__ . "/../app/Models/Cities.php";
 
 // display page
-require_once __DIR__ . "/includes/header.php";
-require_once __DIR__ . "/scripts/$script";
-require_once __DIR__ . "/includes/footer.php";
+require_once __DIR__ . "/../app/Views/includes/header.php";
+require_once __DIR__ . "/../app/$path";
+require_once __DIR__ . "/../app/Views/includes/footer.php";

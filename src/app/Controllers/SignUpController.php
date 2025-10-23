@@ -18,15 +18,16 @@ if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) 
     exit();
 }
 
-// DB communication - read data from user
+// DB communication
 $db = new SignUp();
+
 $params = [
     ':email' => $email
 ];
-$sql = "SELECT * FROM users WHERE email = :email";
-$result = $db->query($sql, $params);
 
-// verify if the user already exists
+// check if user already exists
+$result = $db->checkUser($params);
+
 if (count($result['data']) !== 0) {
 
     // session error
@@ -43,11 +44,8 @@ $params = [
     ':email' => $email,
     ':password' => $password
 ];
-$sql = "
-INSERT INTO users (firstname, lastname, email, password) 
-VALUES (:firstname, :lastname, :email, :password)
-";
-$result = $db->query($sql, $params);
+
+$result = $db->createUser($params);
 
 // verify DB communication errors 
 if ($result['status'] == 'error') {
