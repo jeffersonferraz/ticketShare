@@ -16,6 +16,7 @@ class Offer extends Database {
         ];
     }
 
+    // read
     public function getOffers($departure, $arrival) {
 
         $params = [
@@ -39,6 +40,7 @@ class Offer extends Database {
         ];
     }
 
+    // update
     public function updateOffer($offerId, $departure, $arrival, $datetime) {
         
         $params = [
@@ -64,6 +66,7 @@ class Offer extends Database {
         ];
     }
 
+    // delete
     public function deleteOffer($offerId) {
         
         $params = [
@@ -85,6 +88,7 @@ class Offer extends Database {
         ];
     }
 
+    // read all offers from one user
     public function getOffersByUserId($userId) {
 
         $params = [
@@ -94,6 +98,7 @@ class Offer extends Database {
         $sql = "
             SELECT * FROM offers 
             WHERE creatorId = :creatorId
+            ORDER BY created_at DESC
             ";
         $statement = $this->connect()->prepare($sql);
         $statement->execute($params);

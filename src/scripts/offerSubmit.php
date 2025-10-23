@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // get the data from the sign up form
-$creatorId = $_SESSION['user']['userId'];
+$creatorId = $_SESSION['user']['userId'] ?? NULL;
 $offerId = $_POST['offerId'] ?? NULL;
 $departure = $_POST['departure'] ?? NULL;
 $arrival = $_POST['arrival'] ?? NULL;
@@ -39,12 +39,12 @@ if (isset($_POST['offer-create'])) {
     $result = $db->query($sql, $params);
 
     // redirect user
-    echo '<meta http-equiv="refresh" content="0;url=index.php?route=home">';
+    echo '<meta http-equiv="refresh" content="0;url=index.php?route=offer">';
     exit();
 }
 
 // verify which type of POST method
-if (isset($_POST['search-offer'])) {
+if (isset($_POST['offer-search'])) {
 
     // verify if there is data
     if (empty($departure) || empty($arrival)) {
@@ -55,7 +55,10 @@ if (isset($_POST['search-offer'])) {
     // search for offers
     $result = $db->getOffers($departure, $arrival);
 
+    // fallback value: NULL
+    // if $_SESSION['results'] is empty or NULL
     $_SESSION['results'] = $result['data'] ?? NULL;
+    $_SESSION['request_submitted'] = true;
 
     // redirect user
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=search">';

@@ -6,8 +6,9 @@ $data = new Database();
 $results = $data->getCities();
 $cities = $results['data'];
 ?>
-<div class="container p-4 mt-2 border rounded-3 shadow-sm bg-light text-center w-100">
-    <h2 class="text-center text-dark text-opacity-75 mt-4 mb-5">Search for a Ride</h2>
+<div class="container p-5 mt-2 border rounded-3 shadow-sm bg-light text-center w-100">
+    <h2 class="text-start p-2 text-dark text-opacity-75 mt-4" style="font-weight: 700;">Search for a Ride</h2>
+    <hr class="mb-4">
     <div class="col">
         <div class="mb-5 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px; margin:auto;">
 
@@ -32,7 +33,7 @@ $cities = $results['data'];
                 </select>
 
                 <div>
-                    <input class="btn btn-success w-100" type="submit" name="search-offer" value="Search">
+                    <input class="btn btn-success w-100" type="submit" name="offer-search" value="Search">
                 </div>
 
             </form>
@@ -40,9 +41,11 @@ $cities = $results['data'];
         </div>
     </div>
     <div class="container">
-        <? if (isset($_SESSION['results'])) { ?>
+        <!-- false: if $_SESSION['results'] is NULL, false, 0, "", [] or array() -->
+        <? if (!empty($_SESSION['results'])): ?>
             <? $offerResults = $_SESSION['results'] ?>
             <? $_SESSION['results'] = NULL ?>
+            <? $_SESSION['request_submitted'] = NULL ?>
 
             <table class="table table-bordered">
 
@@ -54,22 +57,22 @@ $cities = $results['data'];
                         <th scope="col">Date</th>
                     </tr>
                 </thead>
-
-                <? foreach ($offerResults as $offerId => $offerResult): ?>
-                    <tbody>
+                <tbody>
+                    <? foreach ($offerResults as $offerId => $offerResult): ?>
                         <tr>
                             <th scope="row"><?= $offerId + 1 ?></th>
                             <td><?= $cities[$offerResult['departure']]['cityName'] ?></td>
                             <td><?= $cities[$offerResult['arrival']]['cityName'] ?></td>
                             <td><?= $offerResult['datetime'] ?></td>
                         </tr>
-                    </tbody>
-                <? endforeach; ?>
-
+                    <? endforeach; ?>
+                </tbody>
             </table>
 
-        <? } else {
-            echo "No results.";
-        } ?>
+        <!-- check if a request was submitted -->
+        <? elseif (!empty($_SESSION['request_submitted'])): ?>
+            <? $_SESSION['request_submitted'] = NULL ?>
+            <p>No results for this ride.</p>
+        <? endif; ?>
     </div>
 </div>

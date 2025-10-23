@@ -13,12 +13,10 @@ $offers = $offerResults['data'];
 $data = new Database();
 $cityResults = $data->getCities();
 $cities = $cityResults['data'];
-// echo '<pre>';
-// print_r($cities);
-// echo '</pre>';
 ?>
-<div class="container p-4 mt-2 mb-5 border rounded-3 shadow-sm bg-light text-center w-100">
-    <h2 class="text-center text-dark text-opacity-75 mt-4 mb-5">My Offers</h2>
+<div class="container p-5 mt-2 mb-5 border rounded-3 shadow-sm bg-light text-center w-100">
+    <h2 class="text-start p-2 text-dark text-opacity-75 mt-4" style="font-weight: 700;">My Offers</h2>
+    <hr class="mb-4">
     <div class="row">
         <? foreach ($offers as $offer): ?>
             <div class="col">
