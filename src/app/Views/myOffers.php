@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/navbar.php';
 
+// TO DO: create/use a View for "get offers" and "get cities"
+
 // get offers
 $data = new Offer();
 $offerResults = $data->getOffersByUserId($_SESSION['user']['userId']);
@@ -72,10 +74,17 @@ $cities = $cityResults['data'];
 </div>
 
 <script>
+    // edit button
     function enableInputs() {
+
+        // get elements by class
         const cityInputs = document.querySelectorAll('.edit-city');
         const inputs = document.querySelectorAll('.edit');
+
+        // show the city names after clicking edit
         cityInputs.forEach(cityInput => cityInput.hidden = false);
+
+        // enable change the inputs
         inputs.forEach(input => input.disabled = false);
     }
 </script>

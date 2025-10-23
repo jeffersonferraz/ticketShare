@@ -1,5 +1,7 @@
 <?php
 
+// TO DO: restructure into a class
+
 // verifying if a POST method was submitted by the user
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_POST['login-submit'])) {
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';

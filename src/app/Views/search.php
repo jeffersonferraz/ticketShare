@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/navbar.php';
 
+// TO DO: create/use a View for "get cities"
+
 // get cities
 $data = new Cities();
 $results = $data->getCities();
@@ -40,7 +42,10 @@ $cities = $results['data'];
 
         </div>
     </div>
+
+    <!-- TO DO: create a View for this table -->
     <div class="container">
+
         <!-- false: if $_SESSION['results'] is NULL, false, 0, "", [] or array() -->
         <? if (!empty($_SESSION['results'])): ?>
             <? $offerResults = $_SESSION['results'] ?>

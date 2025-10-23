@@ -1,6 +1,6 @@
 <?php
 
-class SignUp extends Database {
+class Signup extends Database {
 
     public function checkUser($params = []) {
 

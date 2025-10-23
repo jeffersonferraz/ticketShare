@@ -1,4 +1,5 @@
 <?php
+
 // start session
 session_start();
 
@@ -31,11 +32,11 @@ switch ($route) {
         break;
 
     case 'signup':
-        $path = 'Views/signUp.php';
+        $path = 'Views/signup.php';
         break;
     
     case 'signup-submit':
-        $path = 'Controllers/SignUpController.php';
+        $path = 'Controllers/SignupController.php';
         break;
 
     case 'login':
@@ -79,7 +80,7 @@ switch ($route) {
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../app/Core/Database.php";
 require_once __DIR__ . "/../app/Models/Login.php";
-require_once __DIR__ . "/../app/Models/SignUp.php";
+require_once __DIR__ . "/../app/Models/Signup.php";
 require_once __DIR__ . "/../app/Models/Offer.php";
 require_once __DIR__ . "/../app/Models/Cities.php";
 

@@ -1,5 +1,7 @@
 <?php
 
+// TO DO: restructure in a class
+
 // verifying if a POST method was submitted by the user
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=offer">';

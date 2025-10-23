@@ -2,7 +2,6 @@
 
 class Offer extends Database {
 
-    // create offer
     public function createOffer($params = []) {
 
         // check if there is a DB communication error
