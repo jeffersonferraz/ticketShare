@@ -9,19 +9,18 @@ $allowedRoutes = require_once __DIR__ . "/../app/Core/routes.php";
 // define routes
 $route = $_GET['route'] ?? 'home';
 
-// verify if user is logged in or wants sign up
-if (!isset($_SESSION['user']) && $route != 'login-submit' && $route != 'signup' && $route != 'signup-submit') {
+// if route does not exist
+if (!in_array($route, $allowedRoutes)) {
+    $route = '404';
+
+    // verify if user is logged in or wants sign up
+} elseif (!isset($_SESSION['user']) && $route != 'login-submit' && $route != 'signup' && $route != 'signup-submit') {
     $route = 'login';
 }
 
 // if user is logged in and try to login again
-if (isset($_SESSION['user']) && $route === 'login') {
+if (isset($_SESSION['user']) && $route == 'login') {
     $route = 'home';
-}
-
-// if route does not exist
-if (!in_array($route, $allowedRoutes)) {
-    $route = '404';
 }
 
 // provide requested routes
@@ -68,7 +67,7 @@ switch ($route) {
         break;
 
     case 'search':
-        $path = 'Views/search.php';
+        $path = 'Views/search.php'; 
         break;
 
     case 'search-submit':

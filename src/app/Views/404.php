@@ -4,3 +4,6 @@
 <div class="d-flex justify-content-center">
     <p class="text-light">Page not found!</p>
 </div>
+<div class="d-flex justify-content-center">
+    <a href="index.php?route=home" class="btn btn-dark">Home</a>
+</div>

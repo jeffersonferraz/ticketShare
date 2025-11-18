@@ -49,8 +49,4 @@ $cities = $results['data'];
     </div>
 </div>
 
-<script>
-    const now = new Date();
-    const formatted = now.toISOString().slice(0, 16);
-    document.getElementById("datetime").value = formatted;
-</script>
+<script src="../public/assets/js/offer.js"></script>

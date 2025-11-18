@@ -31,6 +31,9 @@ unset($_SESSION['error']);
                 <div>
                     <input class="btn btn-success w-100" name="signup-submit" type="submit" value="Sign Up">
                 </div>
+                <div>
+                    <a href="?route=login" class="mt-2 btn btn-secondary w-100">Login</a>
+                </div>
             </form>
         </div>
     </div>

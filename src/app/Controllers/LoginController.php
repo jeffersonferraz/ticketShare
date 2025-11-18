@@ -38,7 +38,7 @@ if ($result['status'] == 'error') {
 if (count($result['data']) == 0) {
 
     // session error
-    $_SESSION['error'] = 'Invalid email or password.';
+    $_SESSION['error'] = 'Email or password invalid.';
 
     echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
     exit();

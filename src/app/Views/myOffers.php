@@ -26,7 +26,7 @@ $cities = $cityResults['data'];
 
                     <form class="row" action="?route=offer-submit" method="POST">
                         <div class="col">
-                            <p class="badge text-bg-secondary mb-4" style="font-size: 15px; font-weight: 400;"><?= 'Offer Nr: ' . $offer["offerId"] ?></p>
+                            <p class="badge text-bg-secondary mb-4" style="font-size: 15px; font-weight: 400;"><?= 'Offer Id: ' . $offer["offerId"] ?></p>
                             <input class="form-control mb-3" name="offerId" value="<?= $offer["offerId"] ?>" hidden>
 
                             <select class="form-control mb-3" name="departure">
@@ -73,18 +73,4 @@ $cities = $cityResults['data'];
     </div>
 </div>
 
-<script>
-    // edit button
-    function enableInputs() {
-
-        // get elements by class
-        const cityInputs = document.querySelectorAll('.edit-city');
-        const inputs = document.querySelectorAll('.edit');
-
-        // show the city names after clicking edit
-        cityInputs.forEach(cityInput => cityInput.hidden = false);
-
-        // enable change the inputs
-        inputs.forEach(input => input.disabled = false);
-    }
-</script>
+<script src="../public/assets/js/myOffers.js"></script>
