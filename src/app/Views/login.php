@@ -1,7 +1,5 @@
 <?php
 
-// TO DO: put this into AuthController
-
 // verify if there is a session error
 $error = $_SESSION['error'] ?? NULL;
 unset($_SESSION['error']);

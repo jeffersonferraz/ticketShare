@@ -2,12 +2,13 @@
 namespace App\Controllers;
 
 use App\Models\Offer;
-use App\Models\User;
 use App\Core\View;
+
+// to-do: create a Helper to handle the logics and get this Controller cleaner
 
 class OfferController {
 
-    public function listUserOffers() {
+    public function viewMyOffers() {
         View::render('myOffers.php');
     }
 
@@ -30,7 +31,7 @@ class OfferController {
                 exit();
             }
 
-            // send data from user
+            // create params
             $params = [
                 ':creatorId' => $creatorId,
                 ':departure' => $departure,
@@ -101,54 +102,7 @@ class OfferController {
         }
     }
 
-    public function updateOffer() {
-        // verify if there is POST method and which case of POST method
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['offer-update'])) {
-            // get the data from form
-            $offerId = $_POST['offerId'] ?? NULL;
-            $departure = $_POST['departure'] ?? NULL;
-            $arrival = $_POST['arrival'] ?? NULL;
-            $datetime = $_POST['datetime'] ?? NULL;
-
-            // verify if there is data
-            if (empty($offerId) || empty($departure) || empty($arrival) || empty($datetime)) {
-                header("Location: index.php?route=my-offers&error=missing-fields");
-                exit();
-            }
-
-            $params = [
-                ':offerId' => $offerId,
-                ':departure' => $departure,
-                ':arrival' => $arrival,
-                ':datetime' => $datetime
-            ];
-
-            // DB communication
-            $db = new Offer();
-
-            // update offer
-            $result = $db->updateOffer($params);
-
-            // redirect user
-            if ($result) {
-                header("Location: index.php?route=my-offers&status=updated");
-                // to do: implement view - result message updated
-
-            } else {
-                header("Location: index.php?route=my-offers&error=update-failed");
-                // to do: implement view - result message update error
-
-            }
-            exit();
-        } else {
-            header("Location: index.php?route=my-offers&error=post-submit-failed");
-            // to do???: implement view - message POST submit error
-
-            exit();
-        }
-    }
-
-        public function editOffer() {
+    public function editOffer() {
         // verify if there is POST method and which case of POST method
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -231,46 +185,4 @@ class OfferController {
             exit();
         }
     }
-
-    public function deleteOffer() {
-        // verify if there is POST method and which case of POST method
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['offer-delete'])) {
-            // get the data from form
-            $offerId = $_POST['offerId'] ?? NULL;
-
-            // verify if there is data
-            if (empty($offerId)) {
-                header("Location: index.php?route=my-offers&error=missing-fields");
-                exit();
-            }
-            
-            $params = [
-                ':offerId' => $offerId,
-            ];
-
-            // DB communication
-            $db = new Offer();
-            
-            // delete offer
-            $result = $db->deleteOffer($params);
-
-            // redirect user
-            if ($result) {
-                header("Location: index.php?route=my-offers&status=deleted");
-                // to do: implement view - result message deleted
-
-            } else {
-                header("Location: index.php?route=my-offers&error=delete-failed");
-                // to do: implement view - result message delete error
-
-            }
-            exit();
-        } else {
-            header("Location: index.php?route=my-offers&error=post-submit-failed");
-            // to do???: implement view - message POST submit error
-
-            exit();
-        }
-    }
-
 }

@@ -7,11 +7,11 @@ use App\Core\Database;
 class User {
 	// implement attributes
 
-  public static function getUser($params = []) {
+  public function getUser($params = []) {
     // check if there is a DB communication error
     $connection = Database::connect();
 
-    if (is_array($connection) && $connection['status'] == 'error') {
+    if (is_array($connection) && $connection['status'] == 'connection-error') {
       // throw back the error
       return $connection;
     }
@@ -32,11 +32,11 @@ class User {
     ];
   }
 
-  public static function createUser($params = []) {
+  public function createUser($params = []) {
     // check if there is a DB communication error
     $connection = Database::connect();
 
-    if (is_array($connection) && $connection['status'] == 'error') {
+    if (is_array($connection) && $connection['status'] == 'connection-error') {
       // throw back the error
       return $connection;
     }
@@ -48,12 +48,12 @@ class User {
     
     $statement = $connection->prepare($sql);
     $statement->execute($params);
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $results = $statement->rowCount();
     
     // throw back the results
     return [
       'status' => 'success',
-      'data' => $results
+      'modified' => $results
     ];
   }
 }

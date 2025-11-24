@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/navbar.php';
 
-// TO DO: create/use a View for "get cities"
-
 // get cities
 use App\Models\Cities;
 $results = Cities::getCities();

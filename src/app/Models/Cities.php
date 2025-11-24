@@ -11,7 +11,7 @@ class Cities {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;

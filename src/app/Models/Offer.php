@@ -6,11 +6,11 @@ use PDO;
 
 class Offer {
 
-    public static function createOffer($params = []) {
+    public function createOffer($params = []) {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;
@@ -23,21 +23,21 @@ class Offer {
 
         $statement = $connection->prepare($sql);
         $statement->execute($params);
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->rowCount();
 
         // throw back the results
         return [
             'status' => 'success',
-            'data' => $results
+            'modified' => $results
         ];
     }
 
     // read offers
-    public static function getOffers($params) {
+    public function getOffers($params) {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;
@@ -65,7 +65,7 @@ class Offer {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;
@@ -90,13 +90,12 @@ class Offer {
 
         $statement = $connection->prepare($sql);
         $statement->execute($filteredParams);
-
         $results = $statement->rowCount();
 
         // throw back the results
         return [
             'status' => 'success',
-            'data' => $results
+            'modified' => $results
         ];
     }
 
@@ -105,7 +104,7 @@ class Offer {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;
@@ -118,12 +117,12 @@ class Offer {
 
         $statement = $connection->prepare($sql);
         $statement->execute($params);
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->rowCount();
 
         // throw back the results
         return [
             'status' => 'success',
-            'data' => $results
+            'modified' => $results
         ];
     }
 
@@ -132,7 +131,7 @@ class Offer {
 
         // check if there is a DB communication error
         $connection = Database::connect();
-        if (is_array($connection) && $connection['status'] == 'error') {
+        if (is_array($connection) && $connection['status'] == 'connection-error') {
 
             // throw back the error
             return $connection;

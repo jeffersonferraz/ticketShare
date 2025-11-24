@@ -4,137 +4,153 @@ namespace App\Controllers;
 use App\Models\User;
 use App\Core\View;
 
+// to-do: create a Helper/Validator to handle the logics and get this Controller cleaner
+
 class AuthController {
 
 	public function start() {
+		// to do: if user is not logged in redirect to login
 		View::render('home.php');
-		exit();
 	}
 
 	public function login() {
+		// to do: if user is logged in redirect to home
 		View::render('login.php');
-		exit();
-	}
-
-	public function loginSubmit() {
-		// get user submitted data
-		$email = $_POST['email'] ?? NULL;
-		$password = $_POST['password'] ?? NULL;
-
-		// verify if there is data
-		if (empty($email) || empty($password)) {
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
-			exit();
-		}
-
-		// DB communication
-		$db = new User();
-
-		$params = [
-			':email' => $email
-		];
-
-		// get data from user
-		$result = $db->getUser($params);
-
-		// verify DB communication errors 
-		if ($result['status'] == 'error') {
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=404">';
-			exit();
-		}
-
-		// verify if the user does not exist
-		if (count($result['data']) == 0) {
-
-			// session error
-			$_SESSION['error'] = 'Email or password invalid.';
-
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
-			exit();
-		}
-
-		// verify if the password match
-		if (!password_verify($password, $result['data'][0]['password'])) {
-
-			// session error
-			$_SESSION['error'] = 'Email or password invalid.';
-
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
-			exit();
-		}
-
-		// define a session for user
-		$_SESSION['user'] = $result['data'][0];
-
-		// redirect user
-		echo '<meta http-equiv="refresh" content="0;url=index.php?route=home">';
-		exit();
 	}
 
 	public function logout() {
 		// terminate session
 		session_destroy();
 
-		// redirect to login » home
-		echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
+		// redirect to login
+		header("Location: index.php?route=login&status=logged-out");
 		exit();
+	}
+
+	public function loginSubmit() {
+		// verify if there is POST method and which case of POST method
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login-submit'])) {
+
+			// get user submitted data
+			$email = $_POST['email'] ?? NULL;
+			$password = $_POST['password'] ?? NULL;
+
+			// verify if there is data
+			if (empty($email) || empty($password)) {
+				header("Location: index.php?route=login&error=missing-fields");
+				exit();
+			}
+
+			// create params
+			$params = [
+				':email' => $email
+			];
+
+			// DB communication
+			$db = new User();
+
+			// get data from user
+			$result = $db->getUser($params);
+
+			// verify if the user does not exist
+			if (count($result['data']) == 0) {
+
+				// session error
+				$_SESSION['error'] = 'Email or password invalid.';
+
+				header("Location: index.php?route=login&error=invalid-entries");
+				exit();
+			}
+
+			// verify if the password match
+			if (!password_verify($password, $result['data'][0]['password'])) {
+
+				// session error
+				$_SESSION['error'] = 'Email or password invalid.';
+
+				header("Location: index.php?route=login&error=invalid-entries");
+				exit();
+			}
+
+			// define a session for user
+			$_SESSION['user'] = $result['data'][0];
+
+			// redirect user
+			header("Location: index.php?route=home&status=logged-in");
+			exit();
+
+		} else {
+			header("Location: index.php?route=login&error=post-submit-failed");
+            // to do???: implement view - message POST submit error
+
+            exit();
+		}
 	}
 
 	public function signup() {
 		View::render('signup.php');
-		exit();
 	}
 
 	public function signupSubmit() {
-		// get the data from the sign up form
-		$firstname = $_POST['firstname'] ?? NULL;
-		$lastname = $_POST['lastname'] ?? NULL;
-		$email = $_POST['email'] ?? NULL;
-		$password = password_hash($_POST['password'] ?? NULL, PASSWORD_DEFAULT);
+		// verify if there is POST method and which case of POST method
+		if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup-submit'])) {
 
-		// verify if there is data
-		if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
-			exit();
+			// get the data from the sign up form
+			$firstname = $_POST['firstname'] ?? NULL;
+			$lastname = $_POST['lastname'] ?? NULL;
+			$email = $_POST['email'] ?? NULL;
+			$password = password_hash($_POST['password'] ?? NULL, PASSWORD_DEFAULT);
+
+			// verify if there is data
+			if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
+				header("Location: index.php?route=signup&error=missing-fields");
+				exit();
+			}
+
+			$checkParams = [
+				':email' => $email
+			];
+
+			// DB communication
+			$db = new User();
+
+			// check if email is already registered
+			$result = $db->getUser($checkParams);
+
+			if (count($result['data']) !== 0) {
+				// session error
+				$_SESSION['error'] = 'Email is already registered.';
+
+				header("Location: index.php?route=signup&error=email-registered");
+				exit();
+			}
+
+			// create params
+			$params = [
+				':firstname' => $firstname,
+				':lastname' => $lastname,
+				':email' => $email,
+				':password' => $password
+			];
+
+			$result = $db->createUser($params);
+
+			if ($result['modified'] !== 0) {
+				// redirect user
+				header("Location: index.php?route=login&status=user-created");
+                // to do: implement view - result message offer created
+
+            } else {
+                header("Location: index.php?route=signup&error=create-failed");
+                // to do: implement view - result message create offer error
+            }
+            exit();
+
+		} else {
+			header("Location: index.php?route=signup&error=post-submit-failed");
+            // to do???: implement view - message POST submit error
+
+            exit();
 		}
-
-		// DB communication
-		$db = new User();
-
-		$params = [
-			':email' => $email
-		];
-
-		// check if user already exists
-		$result = $db->getUser($params);
-
-		if (count($result['data']) !== 0) {
-
-			// session error
-			$_SESSION['error'] = 'Email is already registered.';
-
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
-			exit();
-		}
-
-		// DB communication - send data from user
-		$params = [
-			':firstname' => $firstname,
-			':lastname' => $lastname,
-			':email' => $email,
-			':password' => $password
-		];
-
-		$result = $db->createUser($params);
-
-		// verify DB communication errors 
-		if ($result['status'] == 'error') {
-			echo '<meta http-equiv="refresh" content="0;url=index.php?route=404">';
-			exit();
-		}
-
-		// redirect user
-		echo '<meta http-equiv="refresh" content="0;url=index.php?route=login">';
-		exit();
 	}
 }

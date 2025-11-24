@@ -1,8 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/navbar.php';
 
-// TO DO: create/use a View for "get cities"
-
 // get cities
 use App\Models\Cities;
 $results = Cities::getCities();
@@ -14,7 +12,7 @@ $cities = $results['data'];
     <div class="col">
         <div class="mb-5 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px; margin:auto;">
 
-            <form action="?route=search-offer" method="POST">
+            <form action="?route=offer-search" method="POST">
 
                 <select class="form-control mb-3" name="departure">
                     <option selected disabled>Departure</option>

@@ -1,5 +1,7 @@
 <?php
 
+// to do: implement autoload to get the index cleaner
+
 session_start();
 
 require_once '../app/Core/Router.php';
@@ -25,13 +27,11 @@ $router->add('login-submit', AuthController::class, 'loginSubmit');
 $router->add('logout', AuthController::class, 'logout');
 $router->add('signup', AuthController::class, 'signup');
 $router->add('signup-submit', AuthController::class, 'signupSubmit');
-$router->add('my-offers', OfferController::class, 'listUserOffers');
+$router->add('my-offers', OfferController::class, 'viewMyOffers');
 $router->add('offer', OfferController::class, 'viewCreateOffer');
 $router->add('offer-create', OfferController::class, 'createOffer');
-$router->add('offer-update', OfferController::class, 'updateOffer');
 $router->add('offer-edit', OfferController::class, 'editOffer');
-$router->add('offer-delete', OfferController::class, 'deleteOffer');
-$router->add('search-offer', OfferController::class, 'searchOffer');
+$router->add('offer-search', OfferController::class, 'searchOffer');
 $router->add('search', OfferController::class, 'viewSearchOffer');
 
 // define routes

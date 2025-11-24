@@ -27,8 +27,8 @@ class Database {
 
             // throw back the error
             return [
-                'status' => 'error',
-                'data' => $error->getMessage()
+                'status' => 'connection-error',
+                'message' => $error->getMessage()
             ];
         }
     }
