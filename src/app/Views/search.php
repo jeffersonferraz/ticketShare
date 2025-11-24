@@ -4,8 +4,8 @@ require_once __DIR__ . '/includes/navbar.php';
 // TO DO: create/use a View for "get cities"
 
 // get cities
-$data = new Cities();
-$results = $data->getCities();
+use App\Models\Cities;
+$results = Cities::getCities();
 $cities = $results['data'];
 ?>
 <div class="container p-5 mt-2 border rounded-3 shadow-sm bg-light text-center w-100">
@@ -14,7 +14,7 @@ $cities = $results['data'];
     <div class="col">
         <div class="mb-5 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px; margin:auto;">
 
-            <form action="?route=offer-submit" method="POST">
+            <form action="?route=search-offer" method="POST">
 
                 <select class="form-control mb-3" name="departure">
                     <option selected disabled>Departure</option>
@@ -66,8 +66,8 @@ $cities = $results['data'];
                     <? foreach ($offerResults as $offerId => $offerResult): ?>
                         <tr>
                             <th scope="row"><?= $offerId + 1 ?></th>
-                            <td><?= $cities[$offerResult['departure']]['cityName'] ?></td>
-                            <td><?= $cities[$offerResult['arrival']]['cityName'] ?></td>
+                            <td><?= $cities[$offerResult['departure'] - 1]['cityName'] ?></td>
+                            <td><?= $cities[$offerResult['arrival'] - 1]['cityName'] ?></td>
                             <td><?= $offerResult['datetime'] ?></td>
                         </tr>
                     <? endforeach; ?>

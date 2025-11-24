@@ -1,7 +1,14 @@
 <?php
+namespace App\Core;
+
+use PDO;
+use PDOException;
+
+require_once __DIR__ . '../../../config/config.php';
+
 class Database {
     
-    protected function connect(){
+    public static function connect(){
         
         try {
             $username = DB_USER;    // MySQL username

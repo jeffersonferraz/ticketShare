@@ -4,17 +4,17 @@ require_once __DIR__ . '/includes/navbar.php';
 // TO DO: create/use a View for "get offers" and "get cities"
 
 // get offers
-$data = new Offer();
-$offerResults = $data->getOffersByUserId($_SESSION['user']['userId']);
+use App\Models\Offer;
+$offerResults = Offer::getOffersByUserId($_SESSION['user']['userId']);
 $offers = $offerResults['data'];
 // echo '<pre>';
 // print_r($offers);
 // echo '</pre>';
 
 // get cities
-$data = new Cities();
-$cityResults = $data->getCities();
-$cities = $cityResults['data'];
+use App\Models\Cities;
+$results = Cities::getCities();
+$cities = $results['data'];
 ?>
 <div class="container p-5 mt-2 mb-5 border rounded-3 shadow-sm bg-light text-center w-100">
     <h2 class="text-start p-2 text-dark text-opacity-75 mt-4" style="font-weight: 700;">My Offers</h2>
@@ -24,7 +24,7 @@ $cities = $cityResults['data'];
             <div class="col">
                 <div class="container text-center mb-4 p-4 rounded-3 bg-secondary bg-gradient bg-opacity-50" style="max-width: 350px;">
 
-                    <form class="row" action="?route=offer-submit" method="POST">
+                    <form class="row" action="?route=offer-edit" method="POST">
                         <div class="col">
                             <p class="badge text-bg-secondary mb-4" style="font-size: 15px; font-weight: 400;"><?= 'Offer Id: ' . $offer["offerId"] ?></p>
                             <input class="form-control mb-3" name="offerId" value="<?= $offer["offerId"] ?>" hidden>

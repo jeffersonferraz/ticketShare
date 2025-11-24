@@ -1,11 +1,15 @@
 <?php
+namespace App\Models;
 
-class Offer extends Database {
+use App\Core\Database;
+use PDO;
 
-    public function createOffer($params = []) {
+class Offer {
+
+    public static function createOffer($params = []) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error
@@ -29,10 +33,10 @@ class Offer extends Database {
     }
 
     // read offers
-    public function getOffers($params) {
+    public static function getOffers($params) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error
@@ -60,22 +64,34 @@ class Offer extends Database {
     public function updateOffer($params) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error
             return $connection;
         }
+
+        $filteredParams = array_filter($params);
+        $paramKeys = [];
+
+        foreach ($params as $bindKey => $value) {
+            if ($bindKey !== ':offerId' && $value !== NULL) {
+                $column = ltrim($bindKey, ':');
+                $paramKeys[] = "{$column} = {$bindKey}" ;
+            }
+        }
+        $columns = implode(', ', $paramKeys);
         
         $sql = "
             UPDATE offers
-            SET departure = :departure, arrival = :arrival, datetime = :datetime
+            SET {$columns}
             WHERE offerId = :offerId
             ";
 
         $statement = $connection->prepare($sql);
-        $statement->execute($params);
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->execute($filteredParams);
+
+        $results = $statement->rowCount();
 
         // throw back the results
         return [
@@ -88,7 +104,7 @@ class Offer extends Database {
     public function deleteOffer($params) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error
@@ -112,10 +128,10 @@ class Offer extends Database {
     }
 
     // read all offers from one user
-    public function getOffersByUserId($userId) {
+    public static function getOffersByUserId($userId) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error

@@ -1,11 +1,13 @@
 <?php
 
-class Signup extends Database {
+use App\Core\Database;
+
+class Signup {
 
     public function checkUser($params = []) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error
@@ -31,7 +33,7 @@ class Signup extends Database {
     public function createUser($params = []) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error

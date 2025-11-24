@@ -1,11 +1,13 @@
 <?php
 
-class Login extends Database {
+use App\Core\Database;
+
+class Login {
 
     public function getUser($params = []) {
         
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error

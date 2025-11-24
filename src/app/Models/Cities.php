@@ -1,11 +1,16 @@
 <?php
 
-class Cities extends Database {
+namespace App\Models;
 
-    public function getCities($params = []) {
+use App\Core\Database;
+use PDO;
+
+class Cities {
+
+    public static function getCities($params = []) {
 
         // check if there is a DB communication error
-        $connection = $this->connect();
+        $connection = Database::connect();
         if (is_array($connection) && $connection['status'] == 'error') {
 
             // throw back the error

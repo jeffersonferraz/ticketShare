@@ -4,8 +4,8 @@
 
 // verifying if a POST method was submitted by the user
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && !isset($_POST['signup-submit'])) {
-    echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
-    exit();
+	echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
+	exit();
 }
 
 // get the data from the sign up form
@@ -16,8 +16,8 @@ $password = password_hash($_POST['password'] ?? NULL, PASSWORD_DEFAULT);
 
 // verify if there is data
 if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
-    echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
-    exit();
+	echo '<meta http-equiv="refresh" content="0;url=index.php?route=signup">';
+	exit();
 }
 
 // DB communication

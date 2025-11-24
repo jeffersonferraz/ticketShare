@@ -1,89 +1,41 @@
 <?php
 
-// start session
 session_start();
 
-// load allowed routes
-$allowedRoutes = require_once __DIR__ . "/../app/Core/routes.php";
+require_once '../app/Core/Router.php';
+require_once '../app/Models/Cities.php';
+require_once '../app/Models/Offer.php';
+require_once '../app/Core/Database.php';
+require_once '../app/Core/View.php';
+require_once '../app/Controllers/OfferController.php';
+require_once '../app/Controllers/AuthController.php';
+require_once '../app/Models/User.php';
+
+
+use App\Controllers\AuthController;
+use App\Controllers\OfferController;
+use App\Core\Router;
+
+
+$router = new Router();
+
+$router->add('home', AuthController::class, 'start');
+$router->add('login', AuthController::class, 'login');
+$router->add('login-submit', AuthController::class, 'loginSubmit');
+$router->add('logout', AuthController::class, 'logout');
+$router->add('signup', AuthController::class, 'signup');
+$router->add('signup-submit', AuthController::class, 'signupSubmit');
+$router->add('my-offers', OfferController::class, 'listUserOffers');
+$router->add('offer', OfferController::class, 'viewCreateOffer');
+$router->add('offer-create', OfferController::class, 'createOffer');
+$router->add('offer-update', OfferController::class, 'updateOffer');
+$router->add('offer-edit', OfferController::class, 'editOffer');
+$router->add('offer-delete', OfferController::class, 'deleteOffer');
+$router->add('search-offer', OfferController::class, 'searchOffer');
+$router->add('search', OfferController::class, 'viewSearchOffer');
 
 // define routes
-$route = $_GET['route'] ?? 'home';
+$route = $_GET['route'] ?? 'login';
 
-// if route does not exist
-if (!in_array($route, $allowedRoutes)) {
-    $route = '404';
-
-    // verify if user is logged in or wants sign up
-} elseif (!isset($_SESSION['user']) && $route != 'login-submit' && $route != 'signup' && $route != 'signup-submit') {
-    $route = 'login';
-}
-
-// if user is logged in and try to login again
-if (isset($_SESSION['user']) && $route == 'login') {
-    $route = 'home';
-}
-
-// provide requested routes
-$path = null;
-switch ($route) {
-    case '404':
-        $path = 'Views/404.php';
-        break;
-
-    case 'signup':
-        $path = 'Views/signup.php';
-        break;
-    
-    case 'signup-submit':
-        $path = 'Controllers/SignupController.php';
-        break;
-
-    case 'login':
-        $path = 'Views/login.php';
-        break;
-
-    case 'login-submit':
-        $path = 'Controllers/LoginController.php';
-        break;
-
-    case 'logout':
-        $path = 'Views/logout.php';
-        break;
-
-    case 'home':
-        $path = 'Views/home.php';
-        break;
-
-    case 'offer':
-        $path = 'Views/offer.php';
-        break;
-
-    case 'offer-submit':
-        $path = 'Controllers/OfferController.php';
-        break;
-
-    case 'my-offers':
-        $path = 'Views/myOffers.php';
-        break;
-
-    case 'search':
-        $path = 'Views/search.php'; 
-        break;
-
-    case 'search-submit':
-        $path = 'Controllers/searchSubmit.php';
-        break;
-}
-
-// constantly required resources
-require_once __DIR__ . "/../config/config.php";
-require_once __DIR__ . "/../app/Core/Database.php";
-require_once __DIR__ . "/../app/Models/Login.php";
-require_once __DIR__ . "/../app/Models/Signup.php";
-require_once __DIR__ . "/../app/Models/Offer.php";
-require_once __DIR__ . "/../app/Models/Cities.php";
-
-// display page
-require_once __DIR__ . "/../app/Views/includes/header.php";
-require_once __DIR__ . "/../app/$path";
-require_once __DIR__ . "/../app/Views/includes/footer.php";
+// start Router
+$router->dispatch($route);
